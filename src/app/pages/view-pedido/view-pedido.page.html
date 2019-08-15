@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>Pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-card>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>
+              Descrição:
+          </ion-label>
+          <ion-item>
+            <h3>{{ ordem.descricao }}</h3>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-label>
+            <ion-icon name="calendar"></ion-icon>
+          </ion-label>
+          <ion-item>
+            <h3>{{ ordem.dataHoraFinal }}</h3>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label>Valor:</ion-label>
+            <ion-input type="text" [(ngModel)]='ordem.valor'></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button (click)="enviaResposta(idOrdem, ordem.valor)">Enviar <ion-icon name="send" slot="start"></ion-icon></ion-button>
+        </ion-col>
+    </ion-row>
+    </ion-card>
+  </ion-grid>
+
+</ion-content>

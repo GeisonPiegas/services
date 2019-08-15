@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cadastrar Serviço</ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content padding>
+  <ion-card>
+    <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12" size-md="6">
+           
+                  <ion-item>
+                      <ion-input required type="text" placeholder="Profissão" [(ngModel)]="toda.profissao"></ion-input>
+                  </ion-item> 
+                  <ion-item>
+                    <ion-input required type="text" placeholder="Descrição" [(ngModel)]="toda.descricao"></ion-input>
+                  </ion-item>
+                      <ion-item>
+                        <ion-label>Categoria</ion-label>
+                          <ion-select [(ngModel)]='toda.idCategoria' okText="OK" cancelText="CANCELAR">
+                            <ion-list *ngFor="let c of categoria">
+                                <ion-select-option value="{{c.nome}}">{{c.nome}}</ion-select-option>
+                            </ion-list>
+                          </ion-select>
+                      </ion-item>
+                    <ion-button expand="full" (click)="concluiCadastro()" >Cadastrar</ion-button>
+              
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+</ion-content>

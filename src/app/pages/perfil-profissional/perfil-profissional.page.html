@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>Perfil</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content parallax-header no-bounce class="bg-modal">
+    <ion-card>
+        <ion-grid fixed>
+            <ion-row class="ion-align-items-stretch">
+                <ion-col size="12" [ngClass]="{'show-favorite': isFavorito}" class="ion-text-right">
+                    <ion-icon name="heart-empty" size="large" class="icon-heart-empty" (click)="addfavorito()">
+                    </ion-icon>
+                    <ion-icon name="heart" color="danger" size="large" class="icon-heart" (click)="addfavorito()">
+                    </ion-icon>
+                </ion-col>
+                <ion-col size="12" size-md="6" class="align-text-center">
+                    <img [src]='todoUsuario.foto'>
+                    <h2>{{todoUsuario.nome}}</h2>
+                    <p>{{todoEndereco.lougradouro}} &bull; {{todoEndereco.cidade}}</p>
+                    <p class="profile-description">{{todaAtuacao.descricao}}</p>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                    <br>
+                    <br>
+                    <ion-item>
+                        <ion-icon name="logo-whatsapp" color="secondary" slot="start"></ion-icon>
+                        {{todoUsuario.celular}}
+                        <!-- <a button ion-button color="secondary" item-end medium href="whatsapp://send?text=Hi from ionic&phone=+{{user.phone}}&abid=+{{user.phone}}">Open App</a> -->
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name="pin" color="twitter" slot="start"></ion-icon>
+                        <p>{{todoEndereco.cidade}}</p>
+                    </ion-item>
+                    <ion-item>
+                        <ion-button [routerLink]="['/menu/contrata-servico',idProfissao]">
+                            <ion-icon name="construct" slot="start"></ion-icon> Contratar
+                        </ion-button>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
+</ion-content>

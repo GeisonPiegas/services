@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Olá</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-title>
+      <h4 class="alignCenter">Para darmos continuidade, por favor informe alguns dados.</h4>
+    </ion-card-title>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-item>
+              <ion-input required type="text" placeholder="E-mail" [(ngModel)]='todoUser.email'>
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input required type="password" placeholder="Senha" [(ngModel)]='todoUser.senha'>
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input required type="text" placeholder="Nome" [(ngModel)]='todoUser.nome'></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input required type="text" placeholder="CPF" [(ngModel)]='todoUser.CPF' [brmasker]="{mask:'000.000.000-00', len:14 }"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="6">
+            <ion-item>
+              <ion-input required type="text" placeholder="Celular" [(ngModel)]='todoUser.celular' [brmasker]="{mask:'(00)00000-0000', len:14 }">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input required type="date" [(ngModel)]='todoUser.dataNasc'></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input required type="text" placeholder="Logradouro" [(ngModel)]='todoEnd.lougradouro'></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input required type="number" placeholder="Numero" [(ngModel)]='todoEnd.numero'>
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input required type="text" placeholder="Bairro" [(ngModel)]='todoEnd.bairro'>
+              </ion-input>
+            </ion-item>
+
+            <!-- LISTA AS CIDADES -->
+            <ion-item>
+              <ion-label>Cidade</ion-label>
+              <ion-select [(ngModel)]='todoEnd.cidade' okText="OK" cancelText="CANCELAR">
+                <ion-list *ngFor="let c of cidades">
+                  <ion-select-option value="{{c.nome}}">{{c.nome}}</ion-select-option>
+                </ion-list>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-button expand="full" (click)="concluiCadastro()">cadastrar</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

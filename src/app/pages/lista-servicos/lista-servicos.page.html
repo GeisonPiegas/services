@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu/servico-categorias"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{categoria}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+      <ion-toolbar color="primary">
+          <ion-searchbar placeholder="Procurar" (ionInput)='filterList($event)'></ion-searchbar>
+      </ion-toolbar>
+      <ion-list>
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="12" size-md="6" *ngFor="let servico of todoServicos">
+                <ion-card class="speaker-card" [routerLink]="['/menu/perfil-profissional', servico.id]">
+                  <ion-card-header>
+                    <app-busca-perfil-lista [uidUsuario]='servico.uidUsuario'></app-busca-perfil-lista>
+                    <h4>{{ servico.profissao }}</h4>
+                  </ion-card-header>
+                  <ion-item>
+                    <app-star-rating slot="end" [readOnly]="true" [uidUsuario]="uidUsuario" [idAtuacao]="servico.id"></app-star-rating>
+                    <app-busca-endereco [uidUsuario]='servico.uidUsuario'></app-busca-endereco>
+                  </ion-item>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+    </ion-content>
