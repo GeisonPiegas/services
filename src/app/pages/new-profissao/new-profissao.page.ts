@@ -1,8 +1,9 @@
+import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CategoriaService } from 'src/app/services/Categorias/categorias.service';
 import { Categorias } from 'src/app/services/Categorias/categorias';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { AtuacaoProfissionalService } from 'src/app/services/AtuacaoProfissional/atuacao-profissional.service';
 import { AtuacaoProfissional } from 'src/app/services/AtuacaoProfissional/atuacaoProfissional';
@@ -19,6 +20,7 @@ export class NewProfissaoPage implements OnInit, OnDestroy{
   private subscriptionCategoria: Subscription;
   private uidUsuario: string;
   private idServico: string;
+  @ViewChild('form') form: NgForm;
     //REFERÊNCIA A CLASS USUARIO
 
   constructor(private afAuth: AngularFireAuth, 

@@ -48,7 +48,7 @@ export class CadastroPage implements OnInit, OnDestroy{
 
   //FUNÇÃO PARA CADASTRAR NOVO USUARIO
   async concluiCadastro(){
-    if(this.form.form.valid){
+
       const loading = await this.loadingController.create({
         message: 'Salvando dados...'
       })
@@ -60,7 +60,7 @@ export class CadastroPage implements OnInit, OnDestroy{
 
         //APÓS DADOS CADASTRADOS, ENVIA O USUARIO PARA O INICIO DA APLICAÇÃO
         this.navCtrl.navigateBack('/menu/home');
-    }
+
   }
 
 

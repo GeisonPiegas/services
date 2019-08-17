@@ -1,8 +1,9 @@
+import { NgForm } from '@angular/forms';
 import { CidadesService } from './../../services/Cidades/cidades.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LoadingController, NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Cidade } from 'src/app/services/Cidades/cidade';
 
 @Component({
@@ -12,7 +13,7 @@ import { Cidade } from 'src/app/services/Cidades/cidade';
 })
 export class DetailsCidadePage implements OnInit {
     uid: String;
-  
+    @ViewChild('form') form: NgForm;
     todos: Cidade = {
       nome: '',
       cep: null,

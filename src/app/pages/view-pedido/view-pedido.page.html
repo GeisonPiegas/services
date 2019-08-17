@@ -7,6 +7,7 @@
 
 <ion-content>
   <ion-grid>
+    <form #form="ngForm">
     <ion-card>
       <ion-row>
         <ion-col size="12">
@@ -28,14 +29,15 @@
         <ion-col size="12">
           <ion-item>
             <ion-label>Valor:</ion-label>
-            <ion-input type="text" [(ngModel)]='ordem.valor'></ion-input>
+            <ion-input required name="valor" type="text" [(ngModel)]='ordem.valor'></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="12">
-          <ion-button (click)="enviaResposta(idOrdem, ordem.valor)">Enviar <ion-icon name="send" slot="start"></ion-icon></ion-button>
+          <ion-button (click)="enviaResposta(idOrdem, ordem.valor)" [disabled]="!form.form.valid">Enviar <ion-icon name="send" slot="start"></ion-icon></ion-button>
         </ion-col>
     </ion-row>
     </ion-card>
+    </form>
   </ion-grid>
 
 </ion-content>

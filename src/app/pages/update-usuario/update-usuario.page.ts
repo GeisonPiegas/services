@@ -1,7 +1,8 @@
+import { NgForm } from '@angular/forms';
 import { UsuarioService } from './../../services/Usuarios/usuario.service';
 import { LoadingController, NavController, Platform, AlertController } from '@ionic/angular';
 import { AuthService } from './../../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Usuario } from 'src/app/services/Usuarios/usuario';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -19,6 +20,7 @@ export class UpdateUsuarioPage implements OnInit {
   public dowloadUrl: Observable<string>;
   private uidUsuario: string;
   private blob: Blob;
+  @ViewChild('form') form: NgForm;
 
   constructor(private authService: AuthService,
     private usuarioService: UsuarioService,

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Categorias } from 'src/app/services/Categorias/categorias';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController, NavController, Platform } from '@ionic/angular';
@@ -22,6 +23,7 @@ export class DetailsCategoriaPage implements OnInit {
   };
  
   todoNome = null;
+  @ViewChild('form') form: NgForm;
 
   constructor(private route: ActivatedRoute, 
     private loadingController: LoadingController, 

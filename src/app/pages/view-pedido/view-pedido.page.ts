@@ -1,6 +1,7 @@
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrdemServicoService } from 'src/app/services/OrdemServico/ordem-servico.service';
 import { OrdemServico } from 'src/app/services/OrdemServico/ordem-servico';
 import { NavController } from '@ionic/angular';
@@ -25,6 +26,7 @@ export class ViewPedidoPage implements OnInit {
 
   private subscriptionOrdem: Subscription;
   public idOrdem: string;
+  @ViewChild('form') form: NgForm;
 
   constructor(private ordemServicoService: OrdemServicoService,
               private route: ActivatedRoute,
