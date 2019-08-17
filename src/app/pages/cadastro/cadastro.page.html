@@ -14,47 +14,49 @@
     </ion-card-title>
     <ion-card-content>
       <ion-grid>
+        <form #form="ngForm">
         <ion-row>
           <ion-col size="12" size-md="6">
             <ion-item>
-              <ion-input required type="text" placeholder="E-mail" [(ngModel)]='todoUser.email'>
+              <ion-input name="email" type="text" placeholder="E-mail" [(ngModel)]='todoUser.email' [brmasker]="{mask:'000.000.000-00', len:14 }" required>
               </ion-input>
             </ion-item>
             <ion-item>
-              <ion-input required type="password" placeholder="Senha" [(ngModel)]='todoUser.senha'>
+              <ion-input name="senha" type="password" placeholder="Senha" [(ngModel)]='todoUser.senha' required>
               </ion-input>
             </ion-item>
             <ion-item>
-              <ion-input required type="text" placeholder="Nome" [(ngModel)]='todoUser.nome'></ion-input>
+              <ion-input name="nome" type="text" placeholder="Nome" [(ngModel)]='todoUser.nome' required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input required type="text" placeholder="CPF" [(ngModel)]='todoUser.CPF' [brmasker]="{mask:'000.000.000-00', len:14 }"></ion-input>
+              <ion-input name="cpf" type="text" placeholder="CPF" [(ngModel)]='todoUser.CPF' [brmasker]="{mask:'000.000.000-00', type:'num', len:14 }" required></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-md="6">
             <ion-item>
-              <ion-input required type="text" placeholder="Celular" [(ngModel)]='todoUser.celular' [brmasker]="{mask:'(00)00000-0000', len:14 }">
+              <ion-input name="celular" type="text" placeholder="Celular" [(ngModel)]='todoUser.celular' [brmasker]="{mask:'(00)00000-0000', type:'num', len:14 }" required>
               </ion-input>
             </ion-item>
             <ion-item>
-              <ion-input required type="date" [(ngModel)]='todoUser.dataNasc'></ion-input>
+              <ion-label>Data de Nascimento:</ion-label>
+              <ion-input name="data" type="date" [(ngModel)]='todoUser.dataNasc'required ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input required type="text" placeholder="Logradouro" [(ngModel)]='todoEnd.lougradouro'></ion-input>
+              <ion-input name="lougradouro" type="text" placeholder="Logradouro" [(ngModel)]='todoEnd.lougradouro' required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input required type="number" placeholder="Numero" [(ngModel)]='todoEnd.numero'>
+              <ion-input name="numeroEndereco" type="number" placeholder="Numero" [(ngModel)]='todoEnd.numero' [brmasker]="{mask:'000000', len:6 }" required>
               </ion-input>
             </ion-item>
             <ion-item>
-              <ion-input required type="text" placeholder="Bairro" [(ngModel)]='todoEnd.bairro'>
+              <ion-input name="bairro" type="text" placeholder="Bairro" [(ngModel)]='todoEnd.bairro' required>
               </ion-input>
             </ion-item>
 
             <!-- LISTA AS CIDADES -->
             <ion-item>
               <ion-label>Cidade</ion-label>
-              <ion-select [(ngModel)]='todoEnd.cidade' okText="OK" cancelText="CANCELAR">
+              <ion-select name="cidade" [(ngModel)]='todoEnd.cidade' okText="OK" cancelText="CANCELAR" required>
                 <ion-list *ngFor="let c of cidades">
                   <ion-select-option value="{{c.nome}}">{{c.nome}}</ion-select-option>
                 </ion-list>
@@ -62,9 +64,10 @@
             </ion-item>
           </ion-col>
           <ion-col size="12">
-            <ion-button expand="full" (click)="concluiCadastro()">cadastrar</ion-button>
+            <ion-button expand="full" (click)="concluiCadastro()" [disabled]="!form.form.valid">cadastrar</ion-button>
           </ion-col>
         </ion-row>
+        </form>
       </ion-grid>
     </ion-card-content>
   </ion-card>

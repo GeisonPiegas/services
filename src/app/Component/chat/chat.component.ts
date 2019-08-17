@@ -34,7 +34,7 @@ export class ChatComponent implements OnInit, OnDestroy{
     this.usuarioChat = this.navParams.get('uidUsuario');
     this.usuarioAtual = this.auth.auth.currentUser.uid;
     
-    this.usuarioService.getTodo(this.usuarioChat).subscribe( res => {
+    this.usuarioService.getUsuario(this.usuarioChat).subscribe( res => {
       this.nomeUsuarioChat = res.nome;
       this.fotoUsuarioChat = res.foto;
     })

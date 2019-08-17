@@ -26,7 +26,7 @@ export class BuscaPerfilProfissionalComponent implements OnInit {
     this.profissaoService.getTodo(this.idProfissao).subscribe( res => {
       this.nomeServico = res.profissao;
       this.uidUsuario = res.uidUsuario
-      this.usuarioService.getTodo(this.uidUsuario).subscribe( pessoa => {
+      this.usuarioService.getUsuario(this.uidUsuario).subscribe( pessoa => {
         this.nomeUsuario = pessoa.nome;
         this.fotoUsuario = pessoa.foto;
       })

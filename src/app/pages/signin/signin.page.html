@@ -8,10 +8,10 @@
             <ion-col size="12" size-sm="6">
                 <form #form="ngForm">
                 <ion-item>
-                  <ion-input type="text" name="email" placeholder="E-mail" [(ngModel)]="user.email" #email="ngModel" required></ion-input>
+                  <ion-input type="text" name="email" placeholder="E-mail" [(ngModel)]="user.email"  required></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-input type="password" name="password" placeholder="Senha" [(ngModel)]="user.password" #password="ngModel" required></ion-input>
+                  <ion-input type="password" name="password" placeholder="Senha" [(ngModel)]="user.password" required></ion-input>
                 </ion-item>
                 <ion-button expand="full" class="login-button" [disabled]="!form.form.valid" (click)="signIn()">Entrar</ion-button>
                 </form>

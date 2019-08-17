@@ -1,9 +1,10 @@
+import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Cidade } from './../../services/Cidades/cidade';
 import { LoadingController, NavController } from '@ionic/angular';
 import { Usuario } from './../../services/Usuarios/usuario';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { UsuarioService } from 'src/app/services/Usuarios/usuario.service';
 import { Endereco } from 'src/app/services/Endereco/endereco';
 import { CidadesService } from 'src/app/services/Cidades/cidades.service';
@@ -15,16 +16,16 @@ import { CidadesService } from 'src/app/services/Cidades/cidades.service';
   styleUrls: ['./cadastro.page.scss'],
 })
 export class CadastroPage implements OnInit, OnDestroy{
-  uidUser: any;
+  public uidUser: any;
   public cidades = Array<Cidade>();
   private subscriptionCidades: Subscription;
-  private foto: any;
+  @ViewChild('form') form: NgForm;
 
   constructor(private afAuth: AngularFireAuth, 
-    private userService: UsuarioService, 
+    private usuarioService: UsuarioService, 
     private loadingController: LoadingController,
-    private cidService: CidadesService,
-    private nav: NavController) {
+    private cidadeService: CidadesService,
+    private navCtrl: NavController) {
   }
 
   ngOnInit(){
@@ -34,7 +35,7 @@ export class CadastroPage implements OnInit, OnDestroy{
 
   //FUNÇÃO QUE CARREGA TODAS AS CIDADES PREVIAMENTE CADASTRADAS NA APLICAÇÃO
   coletaCidade(){
-    this.subscriptionCidades = this.cidService.getTodos().subscribe(res => {
+    this.subscriptionCidades = this.cidadeService.getTodos().subscribe(res => {
       this.cidades = res;
       console.log(res);
     });
@@ -44,26 +45,22 @@ export class CadastroPage implements OnInit, OnDestroy{
     this.subscriptionCidades.unsubscribe();
   }
 
-  //FUNÇÃO QUE CARREGA A IMAGEM
-  uploadImagem(event) {
-    this.foto = event.target.files[0];
-  }
-
 
   //FUNÇÃO PARA CADASTRAR NOVO USUARIO
   async concluiCadastro(){
-    const loading = await this.loadingController.create({
-      message: 'Salvando dados...'
-    })
+    if(this.form.form.valid){
+      const loading = await this.loadingController.create({
+        message: 'Salvando dados...'
+      })
 
-      //PASSA OS DADOS PARA CADASTRAR O USUARIO E SEU ENDEREÇO ENQUANTO ISSO EXIBE UM LOADING
-      this.uidUser = this.userService.addTodo(this.todoUser, this.todoEnd, this.foto).then(() => {
-        loading.dismiss();
-      });
+        //PASSA OS DADOS PARA CADASTRAR O USUARIO E SEU ENDEREÇO ENQUANTO ISSO EXIBE UM LOADING
+        this.uidUser = this.usuarioService.addUsuarioTodo(this.todoUser, this.todoEnd).then(() => {
+          loading.dismiss();
+        });
 
-      //APÓS DADOS CADASTRADOS, ENVIA O USUARIO PARA O INICIO DA APLICAÇÃO
-      this.nav.navigateBack('/menu/home');
-     
+        //APÓS DADOS CADASTRADOS, ENVIA O USUARIO PARA O INICIO DA APLICAÇÃO
+        this.navCtrl.navigateBack('/menu/home');
+    }
   }
 
 

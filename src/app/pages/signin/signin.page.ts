@@ -1,4 +1,4 @@
-import { MenuController, ToastController, AlertController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../services/user';

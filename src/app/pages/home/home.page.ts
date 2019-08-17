@@ -23,16 +23,8 @@ export class HomePage implements OnInit, OnDestroy{
   constructor(private ordemServicoService: OrdemServicoService,
               private auth: AngularFireAuth,
               private platform: Platform,
-              private splashScreen: SplashScreen,
-              private localNotifications: LocalNotifications
+              private splashScreen: SplashScreen
               ) { 
-
-    this.localNotifications.schedule({
-      text: 'Teste de Notificação',
-      trigger: {at: new Date(new Date().getTime() + 3600)},
-      led: 'FF0000',
-      sound: null
-    });
 
   }
 

@@ -58,7 +58,7 @@ export class PerfilProfissionalPage implements OnInit, OnDestroy{
       this.user = res.uidUsuario;
       this.verificaFavorito(res.uidUsuario);
         //Busca os dados referentes ao profissional a ser listado.
-        this.usuarioService.getTodo(this.user).subscribe( res => {
+        this.usuarioService.getUsuario(this.user).subscribe( res => {
           this.todoUsuario = res;
           this.nome = res.nome;
           this.foto = res.foto;

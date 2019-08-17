@@ -36,28 +36,28 @@ export class UsuarioService {
     )
   }
   
-  getTodos() {
+  getUsuarios() {
     return this.todosUsuarios;
   }
  
-  getTodo(id) {
+  getUsuario(id) {
     return this.todosCollection.doc<Usuario>(id).valueChanges();
   }
  
-  updateTodo(toda: Usuario, id: string) {
+  updateUsuarioTodo(toda: Usuario, id: string) {
     return this.todosCollection.doc<Usuario>(id).update(toda);
   }
 
-  updateAdmin(id: string, valor: boolean){
+  updateUsuarioAdmin(id: string, valor: boolean){
     return this.todosCollection.doc<Usuario>(id).update({isAdmin: valor})
   }
 
-  updateAtivo(id: string, valor: boolean){
+  updateUsuarioAtivo(id: string, valor: boolean){
     return this.todosCollection.doc<Usuario>(id).update({isAtivo: valor})
   }
  
   //FUNÇÃO PARA CADASTRAR NOVO USUARIO
-  async addTodo(dataUser: Usuario, dataEnd: Endereco, foto: any) {
+  async addUsuarioTodo(dataUser: Usuario, dataEnd: Endereco) {
     //CADASTRA USUARIO NO AUTHENTICATION
     const newUser = await this.authService.createUser(dataUser.email, dataUser.senha);
 
@@ -76,11 +76,11 @@ export class UsuarioService {
     return;
   }
  
-  removeTodo(id) {
+  removeUsuarioTodo(id) {
     return this.todosCollection.doc(id).delete();
   }
 
-  getPorid(categoria: String){
+  getUsuarioPorid(categoria: String){
     return this.db.collection('Usuario', ref => ref.where('idCategoria','==',categoria)).snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
@@ -93,7 +93,7 @@ export class UsuarioService {
     )
   }
 
-  buscaUmPorUm(id){
+  getUsuarioUmPorUm(id){
     return this.todosCollection.doc<Usuario>(id).snapshotChanges().pipe(
       map(a => {
           const data = a.payload.data();

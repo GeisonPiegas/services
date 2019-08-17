@@ -13,6 +13,7 @@ export class LoginGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private navCTRL: NavController){
+     
   }
 
   canActivate(): Promise<boolean> {

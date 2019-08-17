@@ -15,7 +15,7 @@ export class BuscaPerfilPedidosComponent implements OnInit {
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit() {
-    this.usuarioService.getTodo(this.uidUsuario).subscribe( res => {
+    this.usuarioService.getUsuario(this.uidUsuario).subscribe( res => {
       this.nomeUsuario = res.nome;
       this.fotoUsuario = res.foto;
     })

@@ -24,7 +24,7 @@ export class UpdateUsuarioPage implements OnInit {
     private usuarioService: UsuarioService,
     private loadingController: LoadingController,
     private alertController: AlertController,
-    private nav: NavController,
+    private navCtrl: NavController,
     private camera: Camera,
     private platform: Platform,
     private file: File,
@@ -42,7 +42,7 @@ export class UpdateUsuarioPage implements OnInit {
     });
     await loading.present();
  
-    this.usuarioService.getTodo(uidUser).subscribe(res => {
+    this.usuarioService.getUsuario(uidUser).subscribe(res => {
       loading.dismiss();
       this.todoUser = res;
     });
@@ -89,10 +89,10 @@ export class UpdateUsuarioPage implements OnInit {
       message: 'Savando os dados...'
     });
     await loading.present();
-      this.usuarioService.updateTodo(this.todoUser, this.authService.getAuth().currentUser.uid).then(() => {
+      this.usuarioService.updateUsuarioTodo(this.todoUser, this.authService.getAuth().currentUser.uid).then(() => {
 
         loading.dismiss();
-        this.nav.navigateBack('/menu/home');
+        this.navCtrl.navigateBack('/menu/home');
       });
   }
 

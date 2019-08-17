@@ -18,7 +18,7 @@ export class UsuariosPage implements OnInit, OnDestroy {
               private toastController: ToastController) { }
 
   ngOnInit() {
-    this.subscriptionUsuarios = this.usuarioService.getTodos().subscribe( res => {
+    this.subscriptionUsuarios = this.usuarioService.getUsuarios().subscribe( res => {
       this.todosUsuarios = res;
       this.filterUsuarios = res;
     })
@@ -27,7 +27,7 @@ export class UsuariosPage implements OnInit, OnDestroy {
   modificaAdmin(id: string, valor: boolean){
     if(valor == true){valor = false;}else{valor = true;}
 
-    this.usuarioService.updateAdmin(id,valor).then(() => {
+    this.usuarioService.updateUsuarioAdmin(id,valor).then(() => {
       if(valor == true){ this.presentToast("Usuario é Administrador")}else{ this.presentToast("Usuario é Normal")}
     });
   }
@@ -35,7 +35,7 @@ export class UsuariosPage implements OnInit, OnDestroy {
   modificaAtivo(id: string, valor: boolean){
     if(valor == true){valor = false;}else{valor = true;}
 
-    this.usuarioService.updateAtivo(id,valor).then(() => {
+    this.usuarioService.updateUsuarioAtivo(id,valor).then(() => {
       if(valor == true){ this.presentToast("Usuario Ativado")}else{ this.presentToast("Usuario Desativado")}
     });
   }
