@@ -19,7 +19,7 @@
           </ion-col>
           <ion-col size="12" size-md="6">
             <ion-item>
-              <ion-input required name="cep" type="number" placeholder="Cep" [(ngModel)]='todos.cep'></ion-input>
+              <ion-input required name="cep" type="text" placeholder="Cep" [(ngModel)]='todos.cep' [brmasker]="{mask:'00000-000', len:10, type:'num'}"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-md="6">

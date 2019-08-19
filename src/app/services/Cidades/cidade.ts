@@ -1,6 +1,6 @@
 export class Cidade{
     id?: string;
     nome: String;
-    cep: number;
+    cep: string;
     estado?: string;
 }

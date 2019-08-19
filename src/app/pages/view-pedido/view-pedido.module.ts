@@ -1,3 +1,4 @@
+import { BrMaskerModule } from 'br-mask';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +19,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    BrMaskerModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

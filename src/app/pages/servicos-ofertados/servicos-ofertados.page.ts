@@ -4,7 +4,6 @@ import { AtuacaoProfissionalService } from 'src/app/services/AtuacaoProfissional
 import { AtuacaoProfissional } from 'src/app/services/AtuacaoProfissional/atuacaoProfissional';
 import { Subscription } from 'rxjs';
 import { ToastController } from '@ionic/angular';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-servicos-ofertados',
@@ -19,15 +18,7 @@ export class ServicosOfertadosPage implements OnInit, OnDestroy {
   constructor(private atuacaoProfissional: AtuacaoProfissionalService,
               private auth: AngularFireAuth,
               private toastController: ToastController,
-              private localNotifications: LocalNotifications
-              ){
-    this.localNotifications.schedule({
-      text: 'Teste de Notificação',
-      trigger: {at: new Date(new Date().getTime() + 3600)},
-      led: 'FF0000',
-      sound: null
-    });
-  }
+              ){}
 
   ngOnInit() {
     this.uidUsuario = this.auth.auth.currentUser.uid;

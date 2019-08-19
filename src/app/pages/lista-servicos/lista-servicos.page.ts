@@ -13,26 +13,30 @@ import { AtuacaoProfissionalService } from 'src/app/services/AtuacaoProfissional
 })
 export class ListaServicosPage implements OnInit, OnDestroy{
 
-  private servicos = Array<AtuacaoProfissional>();
-  public todoServicos = Array<AtuacaoProfissional>();
-  private filtroServicos = Array<AtuacaoProfissional>();
-  private subscriptionServicos: Subscription;
   public categoria: String;
   public uidUsuario: string;
+  public todoServicos: AtuacaoProfissional[];
+  private servicos: AtuacaoProfissional[];
+  private filtroServicos: AtuacaoProfissional[];
+  private subscriptionServicos: Subscription;
 
-  constructor(private ServicosA: AtuacaoProfissionalService,
+  constructor(private atuacaoProfissionalService: AtuacaoProfissionalService,
               private route: ActivatedRoute,
               private loadingController: LoadingController,
               private auth: AngularFireAuth) { }
 
   ngOnInit() {
+    // PEGA O UID DO USUARIO NO MOMENTO.
     this.uidUsuario = this.auth.auth.currentUser.uid;
-    // PEGA A CATEGORIA DO SERVIÇO A SER BUSCADO.
+    
+    // PEGA A CATEGORIA PASSADA ATRAVEZ DA ROTA
     this.categoria = this.route.snapshot.params['categoria'];
+
     // FAZ A BUSCA DA CATEGORIA RECEBIDA.
     this.loadDados(this.categoria);
   }
 
+  // FUNÇÃO QUE BUSCA OS SERVIÇOS DO BANCO REFERENTE A CATEGORIA PASSADA
   async loadDados(categ: String) {
     const loading = await this.loadingController.create({
       message: 'Buscando Serviços...'
@@ -40,8 +44,10 @@ export class ListaServicosPage implements OnInit, OnDestroy{
     await loading.present();
     
     // PEGA A SERVICOS DO SERVIÇO A SER BUSCADO.
-    this.subscriptionServicos = this.ServicosA.getPorCategoria(categ).subscribe( res => {
+    this.subscriptionServicos = this.atuacaoProfissionalService.getPorCategoria(categ).subscribe( res => {
       this.servicos = res;
+
+      // FILTRO QUE OMITE OS SERVIÇOS OFERECIDOS PELO PROPRIO USUARIO
       this.todoServicos = this.servicos.filter( filtro => {
         if(filtro.uidUsuario != this.uidUsuario){
           return true;
@@ -53,10 +59,12 @@ export class ListaServicosPage implements OnInit, OnDestroy{
     });
   }
 
+  // FUNÇÃO DO FILTRO
   initializeItens(): void{
     this.todoServicos = this.filtroServicos;
   }
 
+  // FUNÇÃO DO FILTRO
   filterList(evt){
     this.initializeItens();
 
@@ -76,8 +84,8 @@ export class ListaServicosPage implements OnInit, OnDestroy{
     });
   }
 
+  // LIBERA A BUSCA AO SAIR DA PAGINA, PARA LIBERAR MEMORIA.
   ngOnDestroy() {
-    // LIBERA A BUSCA AO SAIR DA PAGINA, PARA LIBERAR MEMORIA.
     this.subscriptionServicos.unsubscribe();
   }
 }

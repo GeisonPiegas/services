@@ -14,8 +14,10 @@ export class BuscaPerfilProfissionalComponent implements OnInit {
   public nomeUsuario: String;
   public nomeServico: String;
   public uidUsuario: String;
+  public 
   @Input() idProfissao: string = '';
   @Input() idOrdem: string = '';
+  @Input() situacaoOrdem: number = 0;
 
   constructor(private usuarioService: UsuarioService,
               private profissaoService: AtuacaoProfissionalService,
