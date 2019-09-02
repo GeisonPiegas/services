@@ -14,7 +14,7 @@
             <ion-col size="12" size-md="6" *ngFor="let pedido of pedidos">
               <ion-card [routerLink]="['/menu/view-pedido', pedido.id]">
                 <ion-item>
-                  <app-busca-perfil-pedidos [uidUsuario]="pedido.uidUsuario"></app-busca-perfil-pedidos>
+                  <app-busca-perfil [uidUsuario]="pedido.uidUsuario"></app-busca-perfil>
                 </ion-item>
               </ion-card>
             </ion-col>

@@ -1,9 +1,27 @@
-page-charts {
-    .scroll-content {
-        
-    }
+ion-icon{
+    font-size: 30px;
+}
 
-    ion-card-header {
-        font-weight: bold;
-    }
+ion-card{
+    margin-left: 0%;
+    margin-right: 0%;
+    margin-bottom: 0%;
+    margin-top: 1px;
+}
+
+ion-list{
+    padding: 0%;
+}
+
+ion-card-content{
+    padding: 0%;
+}
+
+.ganho{
+    color: green;
+    margin-left: 20px;
+}
+
+.gasto{
+    color: red;
 }

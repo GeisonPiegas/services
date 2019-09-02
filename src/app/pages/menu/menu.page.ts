@@ -1,5 +1,3 @@
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { Platform } from '@ionic/angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsuarioService } from 'src/app/services/Usuarios/usuario.service';

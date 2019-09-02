@@ -9,13 +9,73 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-card>
-      <ion-card-header>
-        Mês
-      </ion-card-header>
+    <ion-card id="showChart">
+      <ion-toolbar color="danger">
+        <ion-title>Gráfico</ion-title>
+        <ion-buttons slot="end" (click)="closeChart()">
+            <ion-icon name="close"></ion-icon> 
+        </ion-buttons>
+      </ion-toolbar>
       <ion-card-content>
         <canvas #barCanvas></canvas>
-        <h1>Total: {{total | currency: 'BRL'}}</h1>
       </ion-card-content>
     </ion-card>
+    <ion-card>
+        <ion-toolbar color="primary">
+          <ion-title slot="start">Gastos do Mês</ion-title>
+          <ion-icon slot="end" name="pie" (click)="showChart(2)"></ion-icon>
+          <ion-icon id="iconGastos" slot="end" name="arrow-dropdown-circle" (click)="accordionList(1,'iconGastos')"></ion-icon>
+        </ion-toolbar>
+        <ion-card-content *ngIf="viewGastos">
+          <ion-list *ngFor="let servico of diasValorAtualGastos">
+            <ion-item lines="full">
+              <p slot="start">{{ servico.dataHoraTermino | date: 'dd/MM/yyyy' }}</p>
+              <p class="gasto" slot="end">-{{ servico.valor | currency: 'BRL' }}</p>
+            </ion-item>
+          </ion-list>
+          <ion-item color="light">
+            <p slot="start">TOTAL:</p>
+            <p slot="end">{{ totalGasto | currency: 'BRL' }}</p>
+           </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-toolbar color="primary">
+            <ion-title slot="start">Ganhos do Mês</ion-title>
+            <ion-icon slot="end" name="pie" (click)="showChart(1)"></ion-icon>
+            <ion-icon id="iconGanhos" slot="end" name="arrow-dropdown-circle" (click)="accordionList(2,'iconGanhos')"></ion-icon>
+        </ion-toolbar>
+        <ion-card-content *ngIf="viewGanhos">
+          <ion-list *ngFor="let servico of diasValorAtualGanhos">
+            <ion-item lines="full">
+              <p slot="start">{{ servico.dataHoraTermino | date: 'dd/MM/yyyy' }}</p>
+              <p Class="ganho" slot="end">+{{ servico.valor | currency: 'BRL' }}</p>
+            </ion-item>
+          </ion-list>
+          <ion-item color="light">
+            <p slot="start">TOTAL:</p>
+            <p slot="end">{{ totalGanho | currency: 'BRL' }}</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-toolbar color="primary">
+            <ion-title slot="start">Ano Atual</ion-title>
+            <ion-icon slot="end" name="pie" (click)="showChart(3)"></ion-icon>
+            <ion-icon id="iconMeses" slot="end" name="arrow-dropdown-circle" (click)="accordionList(3,'iconMeses')"></ion-icon>
+        </ion-toolbar>
+        <ion-card-content *ngIf="viewMeses">
+          <ion-list *ngFor="let data of valorMeses">
+            <ion-item lines="full" *ngIf="data.valorGanho != 0 || data.valorGasto != 0" >
+              <p slot="start">{{ data.nome }}</p>
+              <p class="gasto" slot="end">-{{ data.valorGasto | currency: 'BRL' }}</p>
+              <p class="ganho" slot="end">+{{ data.valorGanho | currency: 'BRL' }}</p>
+            </ion-item>
+          </ion-list>
+          <ion-item color="light">
+            <p slot="start">TOTAL:</p>
+            <p slot="end">{{ totalAno | currency: 'BRL' }}</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
 </ion-content>

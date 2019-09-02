@@ -1,4 +1,4 @@
-import { BuscaPerfilFavoritosComponent } from './../../Component/busca-perfil-favoritos/busca-perfil-favoritos.component';
+import { SharedModule } from './../../Component/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -20,9 +20,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [FavoritosPage,
-  BuscaPerfilFavoritosComponent]
+  declarations: [
+    FavoritosPage,
+  ]
 })
 export class FavoritosPageModule {}

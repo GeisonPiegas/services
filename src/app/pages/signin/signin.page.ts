@@ -1,10 +1,11 @@
-import { ToastController, AlertController } from '@ionic/angular';
-import { Component, ViewChild } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../services/user';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Network } from '@ionic-native/network/ngx';
+import { Core } from 'src/app/core/core.module';
 
 @Component({
   selector: 'app-signin',
@@ -13,27 +14,53 @@ import { Network } from '@ionic-native/network/ngx';
 })
 
 
-export class SigninPage{
+export class SigninPage implements OnInit{
   user: User = new User();
-  @ViewChild('form') form: NgForm;
+  public formgroup: FormGroup;
+  public email: AbstractControl;
+  public senha: AbstractControl
+  public errorMensagens: any;
 
   constructor(public router: Router,
+              public formBuilder: FormBuilder,
               private authService: AuthService,
-              private toastController: ToastController,
-              private network: Network){ 
-  
-    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-      this.presentToast('NetWork Desconectada! :-(');
-    });
-
+              private network: Network,
+              private core: Core,
+              private loadingController: LoadingController){ 
   
   }
-  async presentToast(msg: string) {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 2000
+
+
+  ngOnInit(){
+
+    this.errorMensagens = this.core.identForm;
+
+    this.formgroup = this.formBuilder.group({
+      email:['',Validators.compose([
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(30),
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])],
+      senha:['',Validators.compose([
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(30),
+        Validators.pattern('^[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])]
+    })
+
+    this.networkConnect();
+
+  }
+
+  async networkConnect(){
+    const loading = await this.loadingController.create({
+      message: 'Conectando com a Internet...'
+    })
+    this.network.onDisconnect().subscribe(() => {
+      loading.dismiss();
     });
-    toast.present();
   }
 
   createAccount(){
@@ -45,23 +72,18 @@ export class SigninPage{
   }
 
   signIn(){
-    if(this.form.form.valid){
-      this.authService.signIn(this.user)
-      .then(() => {
-        this.router.navigate(['menu']);
+
+      this.authService.signIn(this.user).then(() => {
+
+        this.router.navigate(['menu/home']);
+
       })
       .catch((error: any) => {
-        if(error.code == 'auth/invalid-email'){
-          this.presentToast('E-mail invalido');
-        }else if(error.code == 'auth/user-disabled'){
-          this.presentToast('Usuario desativado');
-        }else if(error.code == 'auth/user-not-found'){
-          this.presentToast('Usuario não encontrado');
-        }else if(error.code == 'auth/wrong-password'){
-          this.presentToast('Senha invalida');
-        }
+
+        //IDENTIFICA O ERRO CORRESPONDENTE
+        this.core.identificaError(error.code);
+
       })
-    }
   }
 
 }

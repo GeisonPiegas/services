@@ -1,4 +1,3 @@
-import { BuscaPerfilListaComponent } from './../../Component/busca-perfil-lista-servicos/busca-perfil-lista-servicos.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { ListaServicosPage } from './lista-servicos.page';
 import { StarRatingComponent } from '../../Component/star-rating/star-rating.component';
 import { BuscaEnderecoComponent } from 'src/app/Component/busca-endereco/busca-endereco.component';
+import { SharedModule } from 'src/app/Component/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -19,15 +19,14 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ListaServicosPage,
-    StarRatingComponent,
-    BuscaPerfilListaComponent,
-    BuscaEnderecoComponent]
+  declarations: [
+    ListaServicosPage,
+  ]
 })
 export class ListaServicosPageModule {}

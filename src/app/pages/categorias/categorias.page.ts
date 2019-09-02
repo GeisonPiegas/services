@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CategoriaService } from 'src/app/services/Categorias/categorias.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { Categorias } from 'src/app/services/Categorias/categorias';
 
 @Component({
@@ -16,7 +16,8 @@ export class CategoriasPage implements OnInit, OnDestroy{
 
   constructor(private categoriaService: CategoriaService,
               private toastController: ToastController,
-              private loadingController: LoadingController) { }
+              private loadingController: LoadingController,
+              public alertController: AlertController) { }
  
   ngOnInit() {
     this.loadTodo();

@@ -13,8 +13,8 @@
       <ion-row>
         <ion-col size="12" size-md="6" *ngFor="let fav of favoritos">
           <ion-card>
-              <ion-item detail="false" lines="none">
-                <app-busca-perfil-favoritos [uidUsuario]='fav.uidProfissional'></app-busca-perfil-favoritos>
+              <ion-item detail="false" lines="none"> 
+                <app-busca-perfil [uidUsuario]='fav.uidProfissional'></app-busca-perfil>
                 <ion-icon class="icone" slot="end" name="heart-dislike" color="danger" (click)="desfavoritar(fav.id)"></ion-icon>
               </ion-item>
           </ion-card>

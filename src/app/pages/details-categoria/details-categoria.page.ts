@@ -14,21 +14,21 @@ import { StorageService } from 'src/app/services/storage/storage.service';
   styleUrls: ['./details-categoria.page.scss'],
 })
 export class DetailsCategoriaPage implements OnInit {
-
-  private blob: Blob;
-  todas: Categorias = {
+  
+  @ViewChild('form') form: NgForm;
+  public idCategoria: string;
+  public todas: Categorias = {
     nome: '',
     descricao: '',
     foto: ''
   };
+  private blob: Blob;
  
-  todoNome = null;
-  @ViewChild('form') form: NgForm;
 
   constructor(private route: ActivatedRoute, 
     private loadingController: LoadingController, 
-    private CService: CategoriaService,
-    private nav: NavController,
+    private categoriaService: CategoriaService,
+    private navCtrl: NavController,
     private camera: Camera,
     private platform: Platform,
     private file: File,
@@ -37,8 +37,8 @@ export class DetailsCategoriaPage implements OnInit {
     }
 
   ngOnInit() {
-    this.todoNome = this.route.snapshot.params['nome'];
-    if (this.todoNome)  {
+    this.idCategoria = this.route.snapshot.params['nome'];
+    if (this.idCategoria)  {
       this.loadTodo();
     }
   }
@@ -49,7 +49,7 @@ export class DetailsCategoriaPage implements OnInit {
     });
     await loading.present();
  
-    this.CService.getTodo(this.todoNome).subscribe(res => {
+    this.categoriaService.getTodo(this.idCategoria).subscribe(res => {
       loading.dismiss();
       this.todas = res;
     });
@@ -61,15 +61,15 @@ export class DetailsCategoriaPage implements OnInit {
     });
     await loading.present();
  
-    if (this.todoNome) {
-      this.CService.updateTodo(this.todas, this.todoNome).then(() => {
+    if (this.idCategoria) {
+      this.categoriaService.updateTodo(this.todas, this.idCategoria).then(() => {
         loading.dismiss();
-        this.nav.navigateBack('/menu/categorias');
+        this.navCtrl.navigateBack('/menu/categorias');
       });
     } else {
-      this.CService.addTodo(this.todas).then(() => {
+      this.categoriaService.addTodo(this.todas).then(() => {
         loading.dismiss();
-        this.nav.navigateBack('/menu/categorias');
+        this.navCtrl.navigateBack('/menu/categorias');
       });
     }
   }

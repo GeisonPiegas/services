@@ -28,7 +28,7 @@
               <h6>Até que data você ira querer?</h6>
             </ion-item>
             <ion-item>
-              <ion-input required type="date" [(ngModel)]='contrato.dataHoraFinal'></ion-input>
+              <ion-datetime required display-format="D/MM/YYYY" picker-format="DD MM YYYY" [(ngModel)]='contrato.dataHoraFinal'></ion-datetime>
             </ion-item>
           </ion-col>
           <ion-col size="12">

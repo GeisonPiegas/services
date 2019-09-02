@@ -60,7 +60,7 @@ export class OrdemServicoService {
   }
 
   updateSituacaoConcluida(id: string){
-    return this.todosCollection.doc<OrdemServico>(id).update({situacao: 4})
+    return this.todosCollection.doc<OrdemServico>(id).update({situacao: 4, dataHoraTermino: new Date().getTime()})
   }
 
   updateSituacaoCancelar(id: string){
@@ -106,8 +106,32 @@ export class OrdemServicoService {
     )
   }
 
+  getOrdemProfissional(idProfissao: String, situacao: number){
+    return this.db.collection<OrdemServico>('OrdemServico', ref => ref.where('idProfissao','==',idProfissao).where('situacao','==',situacao)).snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data}
+        });
+      })
+    )
+  }
+
   getOrdemAceitaCliente(uidUsuario: String){
     return this.db.collection<OrdemServico>('OrdemServico', ref => ref.where('uidUsuario','==',uidUsuario).where('situacao','==',3)).snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data}
+        });
+      })
+    )
+  }
+
+  getOrdemsConcluidas(uidUsuario: String){
+    return this.db.collection<OrdemServico>('OrdemServico', ref => ref.where('uidUsuario','==',uidUsuario).where('situacao','==',4)).snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();

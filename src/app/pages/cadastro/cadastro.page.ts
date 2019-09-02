@@ -3,11 +3,11 @@ import { Subscription } from 'rxjs';
 import { Cidade } from './../../services/Cidades/cidade';
 import { LoadingController, NavController } from '@ionic/angular';
 import { Usuario } from './../../services/Usuarios/usuario';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { UsuarioService } from 'src/app/services/Usuarios/usuario.service';
 import { Endereco } from 'src/app/services/Endereco/endereco';
 import { CidadesService } from 'src/app/services/Cidades/cidades.service';
+import { Core } from 'src/app/core/core.module';
 
 
 @Component({
@@ -16,16 +16,16 @@ import { CidadesService } from 'src/app/services/Cidades/cidades.service';
   styleUrls: ['./cadastro.page.scss'],
 })
 export class CadastroPage implements OnInit, OnDestroy{
-  public uidUser: any;
+  
   public cidades = Array<Cidade>();
   private subscriptionCidades: Subscription;
   @ViewChild('form') form: NgForm;
 
-  constructor(private afAuth: AngularFireAuth, 
-    private usuarioService: UsuarioService, 
-    private loadingController: LoadingController,
-    private cidadeService: CidadesService,
-    private navCtrl: NavController) {
+  constructor(private usuarioService: UsuarioService, 
+              private loadingController: LoadingController,
+              private cidadeService: CidadesService,
+              private navCtrl: NavController,
+              private core: Core) {
   }
 
   ngOnInit(){
@@ -37,7 +37,6 @@ export class CadastroPage implements OnInit, OnDestroy{
   coletaCidade(){
     this.subscriptionCidades = this.cidadeService.getTodos().subscribe(res => {
       this.cidades = res;
-      console.log(res);
     });
   }
 
@@ -54,13 +53,18 @@ export class CadastroPage implements OnInit, OnDestroy{
       })
 
         //PASSA OS DADOS PARA CADASTRAR O USUARIO E SEU ENDEREÇO ENQUANTO ISSO EXIBE UM LOADING
-        this.uidUser = this.usuarioService.addUsuarioTodo(this.todoUser, this.todoEnd).then(() => {
-          loading.dismiss();
-        });
+        this.usuarioService.addUsuarioTodo(this.todoUser, this.todoEnd).then(() => {
+          
+          //APÓS DADOS CADASTRADOS, ENVIA O USUARIO PARA O INICIO DA APLICAÇÃO
+          this.navCtrl.navigateRoot('/menu/home');
+          
 
-        //APÓS DADOS CADASTRADOS, ENVIA O USUARIO PARA O INICIO DA APLICAÇÃO
-        this.navCtrl.navigateBack('/menu/home');
+        }).catch((error: any) => {
+          
+          this.navCtrl.pop();
+          this.core.presentAlert('Atenção','Comportamento Inesperado!');
 
+        })
   }
 
 

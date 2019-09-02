@@ -10,12 +10,15 @@
   <ion-content padding>
     <ion-card>
       <ion-grid>
+        <form #form="ngForm">
         <ion-row>
-          <form #form="ngForm">
-          <ion-col>
+          <ion-col size="12">
               <ion-list lines="full">
-                  <ion-avatar class="contact-avatar">
-                    <img required name="foto" [src]='todoUser.foto' (click)="abrirGaleria()">
+                  <ion-avatar class="contact-avatar" *ngIf="photo == ''" >
+                    <img name="foto" [src]='todoUser.foto' (click)="abrirGaleria()">
+                  </ion-avatar>
+                  <ion-avatar class="contact-avatar" *ngIf="photo != ''" >
+                    <img name="foto" src='{{photo}}' (click)="abrirGaleria()">
                   </ion-avatar>
                         <!--<ion-input type="file" expand="full" (change)="uploadImagem($event)"><ion-icon name="add-circle-outline"></ion-icon></ion-input>-->   
               
@@ -24,9 +27,6 @@
                     <ion-input type="text" value="{{ dowloadUrl | async }}" [(ngModel)]='todoUser.foto' name="foto" ></ion-input>
                   </ion-item>
                   -->
-                  <ion-item>
-                      <ion-progress-bar value="{{ uploadPorcent | async }}"></ion-progress-bar>
-                  </ion-item>
                   <ion-item>
                       <ion-input required name="nome" type="text" placeholder="Nome" [(ngModel)]='todoUser.nome'></ion-input>
                   </ion-item> 
@@ -42,8 +42,8 @@
                   <ion-button expand="full" (click)="saveTodo()" [disabled]="!form.form.valid">Alterar</ion-button>
                 </ion-list>
           </ion-col>
-          </form>
         </ion-row>
+       </form>
       </ion-grid>
     </ion-card>
   </ion-content>

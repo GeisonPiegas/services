@@ -16,10 +16,13 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class UpdateUsuarioPage implements OnInit {
 
+  public fileUrl: string;
   public uploadPorcent: Observable<number>;
   public dowloadUrl: Observable<string>;
   private uidUsuario: string;
   private blob: Blob;
+  public photo: string = '';
+
   @ViewChild('form') form: NgForm;
 
   constructor(private authService: AuthService,
@@ -52,33 +55,27 @@ export class UpdateUsuarioPage implements OnInit {
 
   async abrirGaleria(){
     const opcao: CameraOptions = {
-      quality: 30,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      allowEdit: true,
+      targetWidth: 300,
+      targetHeight: 300,
+      //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       correctOrientation: true
     };
 
     try {
-      const fileUrl: string = await this.camera.getPicture(opcao);
+      this.camera.getPicture(opcao).then((imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.photo = base64Image;
+       }, (err) => {
+        // Handle error
+       });
 
-      let file: string;
-
-      if (this.platform.is('ios')) {
-        //IOS RETORNA IMG_23456789.jpg
-        file = fileUrl.split('/').pop();
-      } else {
-        //ANDROID RETORNA IMG_23456.jpg?23456789 SENDO ASSIM O TRATAMENTO É DIFERENTE
-        file = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.indexOf('?'));
-      }
-
-      const path: string = fileUrl.substring(0, fileUrl.lastIndexOf('/'));
-
-      //LE A IMAGEM COMO UM ARQUIVO BINÁRIO
-      const buffer: ArrayBuffer = await this.file.readAsArrayBuffer(path, file);
-      this.blob = new Blob([buffer], { type: 'image/jpg' });
-      this.storageService.uploadImagemUsuario(this.uidUsuario,this.blob).subscribe( res => {
-        this.todoUser.foto = res;
-      });
     } catch (error) {
       this.presentAlert(error);
     }
@@ -91,6 +88,10 @@ export class UpdateUsuarioPage implements OnInit {
       message: 'Savando os dados...'
     });
     await loading.present();
+      // TESTA PARA VER SE A PESSOA CARREGOU NOVA FOTO
+      if (this.photo != '') {
+        this.todoUser.foto = this.photo;
+      }
       this.usuarioService.updateUsuarioTodo(this.todoUser, this.authService.getAuth().currentUser.uid).then(() => {
 
         loading.dismiss();

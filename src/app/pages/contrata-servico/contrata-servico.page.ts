@@ -34,7 +34,7 @@ export class ContrataServicoPage implements OnInit {
 
   async concluiContrato(){
     this.contrato.idProfissao = this.idProfissao;
-    this.contrato.dataHora = new Date();
+    this.contrato.dataHora = new Date().getTime();
     this.contrato.uidUsuario = this.auth.auth.currentUser.uid;
     this.contrato.situacao = 1;
 

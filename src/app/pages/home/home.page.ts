@@ -46,12 +46,11 @@ export class HomePage implements OnInit, OnDestroy{
     // PROCURA POR ORDENS PEDIDAS E EMITE UMA NOTIFICAÇÃO
     this.atuacaoProfissionalService.getServicosProfissional(this.uidUsuario).subscribe( res => {
       res.forEach( profissoes => {
-        console.log("Profissoes: "+profissoes.id);
+        
         this.ordemServicoService.getSituacao(profissoes.id,1).subscribe( pedidos => {
           this.pedidosServicos = 0;
           pedidos.forEach( () => {
             this.pedidosServicos += 1;
-            console.log("numero de pedidos: "+this.pedidosServicos);
           });
           if (this.pedidosServicos != 0) {
             this.openNotificacao(this.pedidosServicos);
@@ -63,7 +62,6 @@ export class HomePage implements OnInit, OnDestroy{
 
   // FUNÇÃO QUE EMITE A NOTIFICAÇÃO
   openNotificacao(quant: number){
-    console.log("Notificação: "+quant);
     this.localNotifications.schedule({
       text: 'Você tem '+quant+' pedidos de serviços pendentes!',
       trigger: {at: new Date(new Date().getTime() + 3600)},

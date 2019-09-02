@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from './user';
-import { AngularFireModule } from 'angularfire2';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +18,9 @@ export class AuthService {
   }
  
 
- async signIn(user: User){
-       const dados = await this.AngularFireAuth.auth.signInWithEmailAndPassword(user.email, user.password);
-       return dados;
+  signIn(user: User){
+      const dados =  this.AngularFireAuth.auth.signInWithEmailAndPassword(user.email, user.password);
+      return dados;
   }
 
   signOut(){

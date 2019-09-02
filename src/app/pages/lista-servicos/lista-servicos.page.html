@@ -17,7 +17,7 @@
               <ion-col size="12" size-md="6" *ngFor="let servico of todoServicos">
                 <ion-card class="speaker-card" [routerLink]="['/menu/perfil-profissional', servico.id]">
                   <ion-card-header>
-                    <app-busca-perfil-lista [uidUsuario]='servico.uidUsuario'></app-busca-perfil-lista>
+                    <app-busca-perfil [uidUsuario]='servico.uidUsuario'></app-busca-perfil>
                     <h4>{{ servico.profissao }}</h4>
                   </ion-card-header>
                   <ion-item>

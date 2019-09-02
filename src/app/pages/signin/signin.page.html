@@ -6,24 +6,33 @@
                 <img src="../../../assets/img/logo.png"/>
             </ion-col>
             <ion-col size="12" size-sm="6">
-                <form #form="ngForm">
+                <form [formGroup]="formgroup">
                 <ion-item>
-                  <ion-input type="text" name="email" placeholder="E-mail" [(ngModel)]="user.email"  required></ion-input>
+                  <ion-input type="text" formControlName="email" placeholder="E-mail" [(ngModel)]="user.email"  required></ion-input>
+                    <div class="erro-mensagens">
+                      <ng-container *ngFor="let error of errorMensagens.email">
+                        <div *ngIf="formgroup.get('email').hasError(error.type) && (formgroup.get('email').dirty || formgroup.get('email').touched)" >
+                          {{ error.mensagem }}
+                        </div>
+                      </ng-container>
+                    </div>                   
                 </ion-item>
                 <ion-item>
-                  <ion-input type="password" name="password" placeholder="Senha" [(ngModel)]="user.password" required></ion-input>
+                  <ion-input type="password" formControlName="senha" placeholder="Senha" [(ngModel)]="user.password" required></ion-input>
+                    <div class="erro-mensagens">
+                        <ng-container *ngFor="let error of errorMensagens.senha">
+                          <div *ngIf="formgroup.get('senha').hasError(error.type) && (formgroup.get('senha').dirty || formgroup.get('senha').touched)" >
+                            {{ error.mensagem }}
+                          </div>
+                        </ng-container>
+                      </div>
                 </ion-item>
-                <ion-button expand="full" class="login-button" [disabled]="!form.form.valid" (click)="signIn()">Entrar</ion-button>
+                <ion-button expand="full" class="login-button" [disabled]="formgroup.invalid" (click)="signIn()">Entrar</ion-button>
                 </form>
                 <ion-row class="ion-text-center"> 
                   <ion-col>
-                    <div>
-                      <span>Facebook</span>
-                    </div>
-                  </ion-col>
-                  <ion-col>
                     <div (click)="resetPassword()">
-                      <span>Esqueci a senha?</span>
+                      <span>Esqueceu a senha?</span>
                     </div>
                   </ion-col>
                   <ion-col>

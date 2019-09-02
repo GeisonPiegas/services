@@ -3,8 +3,9 @@ export class OrdemServico{
     foto: string;
     descricao: String;
     valor?: number;
-    dataHora: Date;
-    dataHoraFinal: Date;
+    dataHora: Number;
+    dataHoraFinal: Number;
+    dataHoraTermino?: Number;
     uidUsuario: String;
     idProfissao?: string;
     situacao: number; //

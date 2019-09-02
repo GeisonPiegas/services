@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { Endereco } from '../Endereco/endereco';
 import { EnderecoService } from '../Endereco/endereco.service';
 import { Observable } from 'rxjs';
+import { StorageService } from '../storage/storage.service';
+import { Core } from 'src/app/core/core.module';
 
 
 
@@ -18,11 +20,15 @@ import { Observable } from 'rxjs';
 export class UsuarioService {
   private todosCollection: AngularFirestoreCollection<Usuario>;
   private todosUsuarios: Observable<Usuario[]>;
+  private fotoDefault = "https://firebasestorage.googleapis.com/v0/b/primeirobanco-8d1a9.appspot.com/o/User.png?alt=media&token=78d69205-4005-4f3b-8925-10439a145ffa";
 
   constructor(
     private db: AngularFirestore,
     private authService: AuthService,
-    private enderecoService: EnderecoService,) {
+    private enderecoService: EnderecoService,
+    private storage: StorageService,
+    private core: Core) {
+
     this.todosCollection = db.collection<Usuario>('Usuario');
     
     this.todosUsuarios = this.todosCollection.snapshotChanges().pipe(
@@ -45,6 +51,9 @@ export class UsuarioService {
   }
  
   updateUsuarioTodo(toda: Usuario, id: string) {
+    this.storage.uploadImagemUsuario(id, toda.foto).subscribe( res => {
+      toda.foto = res;
+    })
     return this.todosCollection.doc<Usuario>(id).update(toda);
   }
 
@@ -58,20 +67,27 @@ export class UsuarioService {
  
   //FUNÇÃO PARA CADASTRAR NOVO USUARIO
   async addUsuarioTodo(dataUser: Usuario, dataEnd: Endereco) {
+
     //CADASTRA USUARIO NO AUTHENTICATION
-    const newUser = await this.authService.createUser(dataUser.email, dataUser.senha);
+    await this.authService.createUser(dataUser.email, dataUser.senha).then((novoUser) => {
+        //EXLUI A SENHA E O EMAIL, PARA NÃO IR A DATABASE
+      delete dataUser.senha;
+      delete dataUser.email;
 
-    //EXLUI A SENHA E O EMAIL, PARA NÃO IR A DATABASE
-    delete dataUser.senha;
-    delete dataUser.email;
+      //FOTO DEFAULT DE NOVO USUARIO
+      dataUser.foto = this.fotoDefault;
 
-    dataUser.foto = "https://firebasestorage.googleapis.com/v0/b/primeirobanco-8d1a9.appspot.com/o/User.png?alt=media&token=78d69205-4005-4f3b-8925-10439a145ffa";
+      //ADICIONA O RETANTES DOS DADOS DO USUARIO NO DATABASE
+      this.todosCollection.doc(novoUser.user.uid).set(dataUser); 
 
-    //ADICIONA O RETANTES DOS DADOS DO USUARIO NO DATABASE
-    this.db.collection('Usuario').doc(newUser.user.uid).set(dataUser); 
+      //DELEGA O CADASTRO DE ENDEREÇO, PARA O SERVICE DE ENDEREÇO
+      this.enderecoService.addTodo(novoUser.user.uid, dataEnd); 
 
-    //DELEGA O CADASTRO DE ENDEREÇO, PARA O SERVICE DE ENDEREÇO
-    this.enderecoService.addTodo(newUser.user.uid, dataEnd);   
+    }).catch((error: any) => {
+
+      //IDENTIFICA O ERRO CORRESPONDENTE 
+      this.core.identificaError(error.code);
+    });
     
     return;
   }
