@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-card>
       <ion-grid>
         <ion-row>
@@ -15,9 +15,19 @@
             <ion-item>
               <h6>Por favor adicione uma foto do serviço!</h6>
             </ion-item>
-            <ion-item>
-              <img [src]='contrato.foto'>      
+            <ion-item *ngIf="photo != ''">
+              <img [src]='photo' [(ngModel)]='contrato.foto'>      
             </ion-item>
+              <ion-item>
+                <ion-segment (ionChange)="abrirGaleria($event)" color="primary">
+                    <ion-segment-button value="friends">
+                      <ion-icon name="camera"></ion-icon>
+                    </ion-segment-button>
+                    <ion-segment-button value="galeria">
+                      <ion-icon name="image"></ion-icon>
+                    </ion-segment-button>
+                  </ion-segment>
+              </ion-item>
             <ion-item>
               <h6>Quanto mais detalhes melhor será para o profissional!</h6>
             </ion-item>
@@ -28,7 +38,8 @@
               <h6>Até que data você ira querer?</h6>
             </ion-item>
             <ion-item>
-              <ion-datetime required display-format="D/MM/YYYY" picker-format="DD MM YYYY" [(ngModel)]='contrato.dataHoraFinal'></ion-datetime>
+              <ion-button slot="start" (click)="datePiker()">Data Final: <ion-icon name="calendar"></ion-icon></ion-button>
+              <p slot="end">{{ dataFinal | date: 'dd/MM/yyyy' }}</p>
             </ion-item>
           </ion-col>
           <ion-col size="12">

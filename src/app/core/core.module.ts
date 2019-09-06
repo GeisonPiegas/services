@@ -27,9 +27,9 @@ export class Core {
   }
 
 
-  async presentToast() {
+  async presentToast(mensagem: string) {
     const toast = await this.toastController.create({
-      message: 'Your settings have been saved.',
+      message: mensagem,
       duration: 2000
     });
     toast.present();

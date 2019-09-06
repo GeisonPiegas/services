@@ -17,10 +17,7 @@
     <ion-grid fixed>
       <ion-row>
         <ion-col size="12" size-md="6" *ngFor="let categorias of todas">
-          <ion-card class="ion-card" button [routerLink]="['/menu/details-categoria', categorias.id]">
-            <div class="ion-text-right">
-              <ion-icon class="icone" button name="trash" (click)="remove(categorias.id)"></ion-icon>
-            </div>
+          <ion-card class="ion-card" (click)="presentActionSheet(categorias.nome, categorias.id)">
               <img [src]="categorias.foto">
             <div class="target ion-text-center">
               <h1 class="card-title">{{ categorias.nome }}</h1>

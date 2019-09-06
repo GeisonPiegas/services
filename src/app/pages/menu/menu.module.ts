@@ -121,6 +121,10 @@ const routes: Routes = [
         loadChildren: '../servicos-aceitos/servicos-aceitos.module#ServicosAceitosPageModule',
         canActivate: [AuthGuard]
       },
+      { 
+        path: 'details-endereco', 
+        loadChildren: '../details-endereco/details-endereco.module#DetailsEnderecoPageModule'
+      },
       {
         path: '',
         redirectTo: 'home'

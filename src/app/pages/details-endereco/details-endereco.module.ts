@@ -1,17 +1,16 @@
-import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ContrataServicoPage } from './contrata-servico.page';
+import { DetailsEnderecoPage } from './details-endereco.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ContrataServicoPage
+    component: DetailsEnderecoPage
   }
 ];
 
@@ -22,7 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ContrataServicoPage],
-  providers: [DatePipe, DatePicker]
+  declarations: [DetailsEnderecoPage]
 })
-export class ContrataServicoPageModule {}
+export class DetailsEnderecoPageModule {}

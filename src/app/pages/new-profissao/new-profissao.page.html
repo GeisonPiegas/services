@@ -7,17 +7,19 @@
   </ion-toolbar>
 </ion-header>
  
-<ion-content padding>
+<ion-content>
   <ion-card>
     <ion-grid fixed>
         <form #form="ngForm">
         <ion-row>
           <ion-col size="12" size-md="6">
                   <ion-item>
-                      <ion-input required name="profissao" type="text" placeholder="Profissão" [(ngModel)]="toda.profissao"></ion-input>
+                      <ion-label position="floating">Profissão</ion-label>
+                      <ion-input required name="profissao" type="text" placeholder="Troca Chuveiro" [(ngModel)]="toda.profissao"></ion-input>
                   </ion-item> 
                   <ion-item>
-                    <ion-input required name="descricao" type="text" placeholder="Descrição" [(ngModel)]="toda.descricao"></ion-input>
+                      <ion-label position="floating">Descrição</ion-label>
+                    <ion-input required name="descricao" type="text" placeholder="Faz tudo isso" [(ngModel)]="toda.descricao"></ion-input>
                   </ion-item>
                       <ion-item>
                         <ion-label>Categoria</ion-label>

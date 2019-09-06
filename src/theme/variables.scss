@@ -75,6 +75,17 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
+  //----------------------------------------------------------------------------------------------
+  // BACKGROUND
+    ion-content{
+      --background: url('../assets/background.svg') no-repeat center center / cover !important;
+    }
+
+    ion-list{
+      background-color: transparent;
+    }
+
+  //----------------------------------------------------------------------------------------------
 }
 
 

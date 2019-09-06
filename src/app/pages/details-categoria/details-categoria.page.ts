@@ -2,11 +2,10 @@ import { NgForm } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Categorias } from 'src/app/services/Categorias/categorias';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController, NavController, Platform } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { CategoriaService } from 'src/app/services/Categorias/categorias.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { StorageService } from 'src/app/services/storage/storage.service';
+import { Core } from 'src/app/core/core.module';
 
 @Component({
   selector: 'app-details-categoria',
@@ -16,25 +15,21 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class DetailsCategoriaPage implements OnInit {
   
   @ViewChild('form') form: NgForm;
-  public idCategoria: string;
   public todas: Categorias = {
     nome: '',
     descricao: '',
     foto: ''
   };
-  private blob: Blob;
- 
+  public photo: string = '';
+  private idCategoria: string;
+  
 
   constructor(private route: ActivatedRoute, 
-    private loadingController: LoadingController, 
-    private categoriaService: CategoriaService,
-    private navCtrl: NavController,
-    private camera: Camera,
-    private platform: Platform,
-    private file: File,
-    private storageService: StorageService){
-
-    }
+              private loadingController: LoadingController, 
+              private categoriaService: CategoriaService,
+              private navCtrl: NavController,
+              private camera: Camera,
+              private core: Core){ }
 
   ngOnInit() {
     this.idCategoria = this.route.snapshot.params['nome'];
@@ -62,11 +57,18 @@ export class DetailsCategoriaPage implements OnInit {
     await loading.present();
  
     if (this.idCategoria) {
+      if (this.photo != '') {
+        this.todas.foto = this.photo;
+      }
+      console.log(this.photo);
       this.categoriaService.updateTodo(this.todas, this.idCategoria).then(() => {
         loading.dismiss();
         this.navCtrl.navigateBack('/menu/categorias');
       });
     } else {
+      if (this.photo != '') {
+        this.todas.foto = this.photo;
+      }
       this.categoriaService.addTodo(this.todas).then(() => {
         loading.dismiss();
         this.navCtrl.navigateBack('/menu/categorias');
@@ -76,34 +78,29 @@ export class DetailsCategoriaPage implements OnInit {
 
   async abrirGaleria(){
     const opcao: CameraOptions = {
-      quality: 30,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      //mediaType: this.camera.MediaType.PICTURE,
+      allowEdit: true,
+      targetWidth: 300,
+      targetHeight: 300,
       correctOrientation: true
     };
 
     try {
-      const fileUrl: string = await this.camera.getPicture(opcao);
+      this.camera.getPicture(opcao).then((imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.photo = base64Image;
+       }, (err) => {
+        // Handle error
+       });
 
-      let file: string;
-
-      if (this.platform.is('ios')) {
-        //IOS RETORNA IMG_23456789.jpg
-        file = fileUrl.split('/').pop();
-      } else {
-        //ANDROID RETORNA IMG_23456.jpg?23456789 SENDO ASSIM O TRATAMENTO É DIFERENTE
-        file = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.indexOf('?'));
-      }
-
-      const path: string = fileUrl.substring(0, fileUrl.lastIndexOf('/'));
-
-      //LE A IMAGEM COMO UM ARQUIVO BINÁRIO
-      const buffer: ArrayBuffer = await this.file.readAsArrayBuffer(path, file);
-      this.blob = new Blob([buffer], { type: 'image/jpg' });
-      this.storageService.uploadImagemCategoria(this.todas.nome,this.blob).subscribe( res => {
-        this.todas.foto = res;
-      });
     } catch (error) {
+      this.core.presentAlert('Ops, algo aconteceu!',error);
     }
   }
 

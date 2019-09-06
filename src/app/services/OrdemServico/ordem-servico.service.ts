@@ -4,6 +4,7 @@ import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/fires
 import { map } from 'rxjs/operators';
 import { OrdemServico } from './ordem-servico';
 import { ChatService } from '../Chat/chat.service';
+import { StorageService } from '../storage/storage.service';
 
 
 @Injectable({
@@ -17,7 +18,9 @@ export class OrdemServicoService {
   private todas: Observable<OrdemServico[]>;
  
   constructor(private db: AngularFirestore,
-              private chat: ChatService) {
+              private chat: ChatService,
+              private storageService: StorageService) {
+
     this.todosCollection = db.collection<OrdemServico>('OrdemServico');
     this.todas = this.todosCollection.snapshotChanges().pipe(
       map(actions => {
@@ -43,6 +46,9 @@ export class OrdemServicoService {
   }
  
   addTodo(toda: OrdemServico) {
+    this.storageService.uploadImagemOrdemServico(toda.id, toda.foto).subscribe( res => {
+      toda.foto = res;
+    })
     return this.todosCollection.add(toda);
   }
  

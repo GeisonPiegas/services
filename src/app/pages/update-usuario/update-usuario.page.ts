@@ -1,13 +1,11 @@
+import { Core } from 'src/app/core/core.module';
 import { NgForm } from '@angular/forms';
 import { UsuarioService } from './../../services/Usuarios/usuario.service';
-import { LoadingController, NavController, Platform, AlertController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Usuario } from 'src/app/services/Usuarios/usuario';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { Observable } from 'rxjs';
-import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-update-usuario',
@@ -16,25 +14,18 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class UpdateUsuarioPage implements OnInit {
 
-  public fileUrl: string;
-  public uploadPorcent: Observable<number>;
-  public dowloadUrl: Observable<string>;
   private uidUsuario: string;
-  private blob: Blob;
   public photo: string = '';
 
   @ViewChild('form') form: NgForm;
 
   constructor(private authService: AuthService,
-    private usuarioService: UsuarioService,
-    private loadingController: LoadingController,
-    private alertController: AlertController,
-    private navCtrl: NavController,
-    private camera: Camera,
-    private platform: Platform,
-    private file: File,
-    private storageService: StorageService
-    ) { 
+              private usuarioService: UsuarioService,
+              private loadingController: LoadingController,
+              private navCtrl: NavController,
+              private camera: Camera,
+              private core: Core){
+
     this.uidUsuario = this.authService.getAuth().currentUser.uid
     //CHAMA A FUNÇÃO PARA BUSCAR OS DADOS
     this.loadTodo(this.uidUsuario);
@@ -51,6 +42,10 @@ export class UpdateUsuarioPage implements OnInit {
       loading.dismiss();
       this.todoUser = res;
     });
+  }
+
+  editaEndereco(){
+    this.navCtrl.navigateBack('menu/details-endereco');
   }
 
   async abrirGaleria(){
@@ -77,7 +72,7 @@ export class UpdateUsuarioPage implements OnInit {
        });
 
     } catch (error) {
-      this.presentAlert(error);
+      this.core.presentAlert('Ops, algo acontece!',error);
     }
   }
 
@@ -92,22 +87,13 @@ export class UpdateUsuarioPage implements OnInit {
       if (this.photo != '') {
         this.todoUser.foto = this.photo;
       }
+      console.log(this.photo);
+
       this.usuarioService.updateUsuarioTodo(this.todoUser, this.authService.getAuth().currentUser.uid).then(() => {
 
         loading.dismiss();
         this.navCtrl.navigateBack('/menu/home');
       });
-  }
-
-  async presentAlert(msg) {
-    const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Subtitle',
-      message: msg,
-      buttons: ['OK']
-    });
-
-    await alert.present();
   }
 
   ngOnInit() {

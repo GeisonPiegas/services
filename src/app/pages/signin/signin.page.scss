@@ -1,5 +1,5 @@
 ion-card {
-  background-color: rgba(255, 255, 255, 0.651);
+  background-color: rgba(255, 255, 255, 0.541);
   ion-item{
     --border-radius: 10px;
   }
@@ -10,12 +10,8 @@ ion-card {
 
 }
 
-.fundo {
-  --background: rgba(255, 255, 255, 0);
-  background-image: url(../../../assets/img/servicos-terceirizados-na-zona-sul.png);
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: bottom;
+.texto{
+  color: black;
 }
 
 .erro-mensagens{

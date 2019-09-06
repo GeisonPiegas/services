@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu/update-usuario"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Endereço</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-grid>
+      <form #form="ngForm">
+      <ion-row>
+        <ion-col size="12" size-md="12">
+            <ion-item>
+                <ion-input required name="logradouro" type="text" [(ngModel)]='todoEndereco.lougradouro'></ion-input>
+              </ion-item>
+        </ion-col>
+        <ion-col size="12" size-md="6">
+          <ion-item>
+            <ion-input required name="bairro" type="text" [(ngModel)]='todoEndereco.bairro'></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-md="6">
+          <ion-item>
+            <ion-input required name="numero" type="number" [(ngModel)]='todoEndereco.numero'></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-md="6">
+            <ion-item>
+                <ion-label>Cidade</ion-label>
+                <ion-select required name="estado" [(ngModel)]='todoEndereco.cidade' okText="OK" cancelText="CANCELAR">
+                  <ion-list *ngFor="let cidade of todasCidades">
+                    <ion-select-option value="{{ cidade.id }}">{{ cidade.nome }}</ion-select-option>
+                  </ion-list>
+                </ion-select>
+              </ion-item>
+          </ion-col>
+        <ion-col size="12">
+          <ion-button expand="full" (click)="saveTodo()" [disabled]="!form.form.valid">Salvar</ion-button>
+        </ion-col>
+      </ion-row>
+      </form>
+    </ion-grid>
+  </ion-card>
+</ion-content>

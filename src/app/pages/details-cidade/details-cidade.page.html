@@ -7,19 +7,21 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-content padding>
+  <ion-content>
     <ion-card>
       <ion-grid>
         <form #form="ngForm">
         <ion-row>
           <ion-col size="12" size-md="12">
               <ion-item>
+                  <ion-label position="stacked" >Cidade</ion-label>
                   <ion-input required name="nome" type="text" placeholder="Cidade" [(ngModel)]='todos.nome'></ion-input>
                 </ion-item>
           </ion-col>
           <ion-col size="12" size-md="6">
             <ion-item>
-              <ion-input required name="cep" type="text" placeholder="Cep" [(ngModel)]='todos.cep' [brmasker]="{mask:'00000-000', len:10, type:'num'}"></ion-input>
+                <ion-label position="stacked" >CEP</ion-label>
+              <ion-input required name="cep" type="text" placeholder="CEP" [(ngModel)]='todos.cep' [brmasker]="{mask:'00000-000', len:10, type:'num'}"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-md="6">

@@ -35,7 +35,7 @@
           </ion-list>
           <ion-item color="light">
             <p slot="start">TOTAL:</p>
-            <p slot="end">{{ totalGasto | currency: 'BRL' }}</p>
+            <p class="gasto" slot="end">-{{ totalGasto | currency: 'BRL' }}</p>
            </ion-item>
         </ion-card-content>
       </ion-card>
@@ -54,7 +54,7 @@
           </ion-list>
           <ion-item color="light">
             <p slot="start">TOTAL:</p>
-            <p slot="end">{{ totalGanho | currency: 'BRL' }}</p>
+            <p class="ganho" slot="end">+{{ totalGanho | currency: 'BRL' }}</p>
           </ion-item>
         </ion-card-content>
       </ion-card>

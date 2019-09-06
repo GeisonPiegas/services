@@ -24,14 +24,23 @@ export class StorageService {
   }
 
   uploadImagemUsuario(uidUsuario: string, photo: string){
+    console.log(photo);
     const ref = this.afs.ref('Usuario/'+uidUsuario);
     ref.putString(photo, 'data_url');
     return ref.getDownloadURL();     
   }
 
-  uploadImagemCategoria(idCategoria: string, blob: Blob){
-    const ref = this.afs.ref('Categoria/'+idCategoria+'.jpg');
-    const task = ref.put(blob);
+  uploadImagemCategoria(idCategoria: string, photo: string){
+    console.log(photo);
+    const ref = this.afs.ref('Categoria/'+idCategoria);
+    ref.putString(photo, 'data_url');
+    return ref.getDownloadURL();     
+  }
+
+  uploadImagemOrdemServico(idOrdem: string, photo: string){
+    console.log(photo);
+    const ref = this.afs.ref('OrdemServico/'+idOrdem);
+    ref.putString(photo, 'data_url');
     return ref.getDownloadURL();     
   }
 }

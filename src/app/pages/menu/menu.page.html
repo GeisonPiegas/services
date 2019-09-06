@@ -4,18 +4,17 @@
       <ion-menu>
         <ion-header>
           <ion-toolbar color="primary">
-            <ion-title>Menu</ion-title>
+            <ion-avatar slot="start" class="contact-avatar">
+                <img src="{{ foto }}"/>
+            </ion-avatar>
+            <ion-title>
+              <ion-label>
+                <h2>{{ nome }}</h2>
+              </ion-label>
+            </ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          <ion-item>
-            <ion-chip>
-              <ion-avatar>
-                <img src="{{ foto }}">
-              </ion-avatar>
-              <ion-label>Olá, {{ nome }}</ion-label>
-            </ion-chip>
-          </ion-item>
           <ion-list>
             <ion-menu-toggle autoHide="false" *ngFor="let p of paginas; let i = index">
               <ion-item [routerLink]="p.url">

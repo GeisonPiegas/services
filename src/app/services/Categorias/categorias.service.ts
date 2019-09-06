@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Categorias } from './categorias';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
+import { StorageService } from '../storage/storage.service';
 
 
 @Injectable({
@@ -12,7 +13,8 @@ import { map } from 'rxjs/operators';
 export class CategoriaService {
   private todosCollection: AngularFirestoreCollection<Categorias>;
  
-  constructor(db: AngularFirestore) {
+  constructor(private db: AngularFirestore,
+              private storageService: StorageService) {
     this.todosCollection = db.collection<Categorias>('Categorias');
   }
   
@@ -33,10 +35,16 @@ export class CategoriaService {
   }
  
   updateTodo(toda: Categorias, id: string) {
+    this.storageService.uploadImagemCategoria(toda.id, toda.foto).subscribe( res => {
+      toda.foto = res;
+    })
     return this.todosCollection.doc(id).update(toda);
   }
  
   addTodo(toda: Categorias) {
+    this.storageService.uploadImagemCategoria(toda.id, toda.foto).subscribe( res => {
+      toda.foto = res;
+    })
     return this.todosCollection.add(toda);
   }
  
