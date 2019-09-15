@@ -1,7 +1,7 @@
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { OrdemServicoService } from 'src/app/services/OrdemServico/ordem-servico.service';
 import { OrdemServico } from 'src/app/services/OrdemServico/ordem-servico';
 import { NavController } from '@ionic/angular';
@@ -11,7 +11,7 @@ import { NavController } from '@ionic/angular';
   templateUrl: './view-pedido.page.html',
   styleUrls: ['./view-pedido.page.scss'],
 })
-export class ViewPedidoPage implements OnInit {
+export class ViewPedidoPage implements OnInit, OnDestroy {
   ordem: OrdemServico = {
     id: '',
     foto: '',
@@ -44,6 +44,10 @@ export class ViewPedidoPage implements OnInit {
   enviaResposta(idOrdem: string, valor: number){
     this.ordemServicoService.updateValor(idOrdem, valor);
     this.navCTRL.pop();
+  }
+
+  ngOnDestroy(){
+    this.subscriptionOrdem.unsubscribe();
   }
 
 }

@@ -19,31 +19,35 @@
               <img [src]='photo' [(ngModel)]='contrato.foto'>      
             </ion-item>
               <ion-item>
-                <ion-segment (ionChange)="abrirGaleria($event)" color="primary">
-                    <ion-segment-button value="friends">
+                <ion-segment color="primary">
+                    <ion-segment-button (click)="abrirGaleria('camera')">
                       <ion-icon name="camera"></ion-icon>
                     </ion-segment-button>
-                    <ion-segment-button value="galeria">
+                    <ion-segment-button (click)="abrirGaleria('galeria')">
                       <ion-icon name="image"></ion-icon>
                     </ion-segment-button>
-                  </ion-segment>
+                </ion-segment>
               </ion-item>
-            <ion-item>
+            <ion-item lines="none">
               <h6>Quanto mais detalhes melhor será para o profissional!</h6>
             </ion-item>
             <ion-item>
               <ion-input required type="text" placeholder="Descrição do Serviço" [(ngModel)]='contrato.descricao'></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item lines="none">
               <h6>Até que data você ira querer?</h6>
             </ion-item>
-            <ion-item>
-              <ion-button slot="start" (click)="datePiker()">Data Final: <ion-icon name="calendar"></ion-icon></ion-button>
-              <p slot="end">{{ dataFinal | date: 'dd/MM/yyyy' }}</p>
-            </ion-item>
+            <ion-row>
+              <ion-col size="6">
+                <ion-button expand="block" (click)="datePiker()"><ion-icon name="calendar"></ion-icon></ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <p>{{ dataFinal | date: 'dd/MM/yyyy' }}</p>
+              </ion-col>
+            </ion-row>
           </ion-col>
           <ion-col size="12">
-            <ion-button expand="full" (click)="concluiContrato()">Enviar</ion-button>
+            <ion-button expand="block" (click)="concluiContrato()">Enviar</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>

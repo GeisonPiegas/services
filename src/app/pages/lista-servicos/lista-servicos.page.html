@@ -18,10 +18,10 @@
                 <ion-card class="speaker-card" [routerLink]="['/menu/perfil-profissional', servico.id]">
                   <ion-card-header>
                     <app-busca-perfil [uidUsuario]='servico.uidUsuario'></app-busca-perfil>
-                    <h4>{{ servico.profissao }}</h4>
+                    <h4 class="texto">{{ servico.profissao }}</h4>
+                    <app-star-rating [readOnly]="true" [uidUsuario]="uidUsuario" [idAtuacao]="servico.id"></app-star-rating>
                   </ion-card-header>
                   <ion-item>
-                    <app-star-rating slot="end" [readOnly]="true" [uidUsuario]="uidUsuario" [idAtuacao]="servico.id"></app-star-rating>
                     <app-busca-endereco [uidUsuario]='servico.uidUsuario'></app-busca-endereco>
                   </ion-item>
                 </ion-card>

@@ -32,7 +32,7 @@ export class DetailsCategoriaPage implements OnInit {
               private core: Core){ }
 
   ngOnInit() {
-    this.idCategoria = this.route.snapshot.params['nome'];
+    this.idCategoria = this.route.snapshot.params['id'];
     if (this.idCategoria)  {
       this.loadTodo();
     }

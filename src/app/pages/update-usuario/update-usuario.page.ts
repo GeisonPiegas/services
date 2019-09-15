@@ -16,6 +16,7 @@ export class UpdateUsuarioPage implements OnInit {
 
   private uidUsuario: string;
   public photo: string = '';
+  private opcaoCamera: CameraOptions;
 
   @ViewChild('form') form: NgForm;
 
@@ -48,21 +49,33 @@ export class UpdateUsuarioPage implements OnInit {
     this.navCtrl.navigateBack('menu/details-endereco');
   }
 
-  async abrirGaleria(){
-    const opcao: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      allowEdit: true,
-      targetWidth: 300,
-      targetHeight: 300,
-      //sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      correctOrientation: true
-    };
+  async abrirGaleria(tipo: string){
+    if(tipo == 'camera'){
+      this.opcaoCamera = {
+        quality: 100,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE,
+        allowEdit: true,
+        targetWidth: 300,
+        targetHeight: 300,
+        correctOrientation: true
+      };
+    }else{
+      this.opcaoCamera = {
+        quality: 100,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        targetWidth: 300,
+        targetHeight: 300,
+        correctOrientation: true
+      };
+    }
 
     try {
-      this.camera.getPicture(opcao).then((imageData) => {
+      this.camera.getPicture(this.opcaoCamera).then((imageData) => {
         // imageData is either a base64 encoded string or a file URI
         // If it's base64 (DATA_URL):
         let base64Image = 'data:image/jpeg;base64,' + imageData;

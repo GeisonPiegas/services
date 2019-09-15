@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-back-button slot="start" defaultHref="/menu/favoritos"></ion-back-button>
+    <ion-row>
+      <ion-col size="3">
+        <ion-avatar class="contact-avatar">
+            <img src="{{ usuario.foto }}"/>
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="9">
+        <ion-row>
+          <h5>{{ usuario.nome }}</h5>
+        </ion-row>
+        <ion-row>
+          <p><ion-icon name="pin"></ion-icon>{{ endereco.lougradouro }}, {{ endereco.numero }}</p>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<span class="ion-text-center card">
+  <h2>Serviços Ofertados</h2>
+</span>
+
+  <ion-list *ngFor="let servico of servicos">
+    <ion-card>
+      <ion-item lines="none">
+        <h4>{{ servico.profissao }}</h4>
+        <ion-icon slot="end" name="md-list" [routerLink]="['/menu/perfil-profissional', servico.id]"></ion-icon>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-content>

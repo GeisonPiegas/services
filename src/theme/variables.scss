@@ -85,6 +85,14 @@
       background-color: transparent;
     }
 
+    ion-item{
+      --background: transparent;
+    }
+
+    ion-card{
+      --background: url('../assets/background2.svg');
+    }
+
   //----------------------------------------------------------------------------------------------
 }
 

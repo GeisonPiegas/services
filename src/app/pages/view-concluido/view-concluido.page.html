@@ -1,17 +1,16 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-back-button slot="start" defaultHref="/menu/servicos-pedidos"></ion-back-button>
-    <ion-title>Pedido</ion-title>
+    <ion-title>Concluido</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid>
-    <form #form="ngForm">
     <ion-card>
       <ion-row>
         <ion-col size="12">
-          <img [src]="ordem.foto">
+          <img src="{{ ordem.foto }}">
         </ion-col>
         <ion-col size="12">
           <ion-label>
@@ -21,26 +20,32 @@
             <h3>{{ ordem.descricao }}</h3>
           </ion-item>
         </ion-col>
-        <ion-col size="12">
+        <ion-col size="6">
           <ion-label>
-            <ion-icon name="calendar"></ion-icon>
+              Dia que foi Pedido:
           </ion-label>
           <ion-item>
-            <h3>{{ ordem.dataHoraFinal | date: 'dd/MM/yyyy' }}</h3>
+            <h3>{{ ordem.dataHora | date: 'dd/MM/yyyy' }}</h3>
           </ion-item>
         </ion-col>
-        <ion-col size="12">
+        <ion-col size="6">
+          <ion-label>
+              Dia do Termino:
+          </ion-label>
           <ion-item>
-            <ion-label>Valor:</ion-label>
-            <ion-input required name="valor" type="number" [(ngModel)]='ordem.valor'></ion-input>
+            <h3>{{ ordem.dataHoraTermino | date: 'dd/MM/yyyy' }}</h3>
           </ion-item>
         </ion-col>
         <ion-col size="12">
-          <ion-button (click)="enviaResposta(idOrdem, ordem.valor)" [disabled]="!form.form.valid">Enviar <ion-icon name="send" slot="start"></ion-icon></ion-button>
-        </ion-col>
+            <ion-label>
+                Valor Pago:
+            </ion-label>
+            <ion-item>
+              <h3>{{ ordem.valor | currency: 'BRL' }}</h3>
+            </ion-item>
+          </ion-col>
     </ion-row>
     </ion-card>
-    </form>
   </ion-grid>
 
 </ion-content>

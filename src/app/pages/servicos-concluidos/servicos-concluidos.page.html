@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/menu/servicos-ofertados"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Concluidos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+      <ion-list>
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="12" size-md="6" *ngFor="let pedido of concluidos">
+                <ion-card [routerLink]="['/menu/view-concluido', pedido.id]">
+                    <app-busca-perfil [uidUsuario]="pedido.uidUsuario"></app-busca-perfil>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+  </ion-content>
+  

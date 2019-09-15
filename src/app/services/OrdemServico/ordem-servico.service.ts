@@ -112,6 +112,19 @@ export class OrdemServicoService {
     )
   }
 
+  // RETORNA AS ORDEM CONCLUIDAS PELO PROFISSIONAL.
+  getOrdemConcluidas(idProfissao: String){
+    return this.db.collection<OrdemServico>('OrdemServico', ref => ref.where('idProfissao','==',idProfissao).where('situacao','==',4)).snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data}
+        });
+      })
+    )
+  }
+
   getOrdemProfissional(idProfissao: String, situacao: number){
     return this.db.collection<OrdemServico>('OrdemServico', ref => ref.where('idProfissao','==',idProfissao).where('situacao','==',situacao)).snapshotChanges().pipe(
       map(actions => {

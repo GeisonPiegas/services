@@ -7,36 +7,41 @@
     </ion-toolbar>
   </ion-header>
    
-  <ion-content padding>
+  <ion-content>
     <ion-card>
       <ion-grid>
         <form #form="ngForm">
         <ion-row>
           <ion-col size="12">
               <ion-list lines="full">
-                  <ion-avatar class="contact-avatar" *ngIf="photo == ''" >
-                    <img name="foto" [src]='todoUser.foto' (click)="abrirGaleria()">
+                  <ion-avatar class="contact-avatar"  >
+                    <img *ngIf="photo == ''" name="foto" [src]='todoUser.foto' (click)="abrirGaleria()">
+                    <img *ngIf="photo != ''" name="foto" src='{{photo}}' (click)="abrirGaleria()">
                   </ion-avatar>
-                  <ion-avatar class="contact-avatar" *ngIf="photo != ''" >
-                    <img name="foto" src='{{photo}}' (click)="abrirGaleria()">
-                  </ion-avatar>
-                        <!--<ion-input type="file" expand="full" (change)="uploadImagem($event)"><ion-icon name="add-circle-outline"></ion-icon></ion-input>-->   
-              
-                  <!--
+          
                   <ion-item>
-                    <ion-input type="text" value="{{ dowloadUrl | async }}" [(ngModel)]='todoUser.foto' name="foto" ></ion-input>
+                      <ion-segment>
+                          <ion-segment-button (click)="abrirGaleria('camera')">
+                            <ion-icon name="camera"></ion-icon>
+                          </ion-segment-button>
+                          <ion-segment-button (click)="abrirGaleria('galeria')">
+                            <ion-icon name="image"></ion-icon>
+                          </ion-segment-button>
+                        </ion-segment>
                   </ion-item>
-                  -->
                   <ion-item>
+                      <ion-label position="floating">Nome</ion-label>
                       <ion-input required name="nome" type="text" placeholder="Nome" [(ngModel)]='todoUser.nome'></ion-input>
                   </ion-item> 
                   <ion-item>
+                    <ion-label position="floating">CPF</ion-label>
                     <ion-input required name="cpf" type="text" placeholder="CPF" [(ngModel)]='todoUser.CPF' [brmasker]="{mask:'000.000.000-00', len:14 }"></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-input required name="dataNasc" type="date" [(ngModel)]='todoUser.dataNasc'></ion-input>
                   </ion-item>
                   <ion-item>
+                      <ion-label position="floating">Celular</ion-label>
                       <ion-input required name="celular" type="text" placeholder="Celular" [(ngModel)]='todoUser.celular' [brmasker]="{mask:'(00)00000-0000', len:14 }"></ion-input>
                   </ion-item>
                   <ion-button expand="full" (click)="saveTodo()" [disabled]="!form.form.valid">Alterar</ion-button>

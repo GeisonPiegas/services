@@ -18,7 +18,8 @@ export class ServicosPedidosPage implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.pedido = this.route.snapshot.params['servico'];
+    this.pedido = this.route.snapshot.params['id'];
+
     this.buscaOrdemServico(this.pedido);
   }
 

@@ -13,14 +13,14 @@
             <ion-row>
               <ion-col size="12" size-md="6" *ngFor="let ordem of aceitos">
                 <ion-card>
-                  <ion-item>
+                  <ion-item lines="none">
                     <app-busca-perfil [uidUsuario]="ordem.uidUsuario"></app-busca-perfil>
                   </ion-item>
-                  <ion-item>
+                  <ion-item lines="none">
                     <h4>{{ ordem.descricao }}</h4>
                   </ion-item>
-                  <ion-item>
-                    <h4>{{ ordem.valor }}</h4>
+                  <ion-item lines="none">
+                    <h4>{{ ordem.valor | currency:'BRL':true:'1.2-2' }}</h4>
                   </ion-item>
                   <ion-item>
                       <ion-button (click)="servicoConcluido(ordem.id)">Concluido/Pago</ion-button>

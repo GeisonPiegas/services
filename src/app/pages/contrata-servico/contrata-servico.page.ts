@@ -43,7 +43,8 @@ export class ContrataServicoPage implements OnInit {
   async concluiContrato(){
     this.contrato.idProfissao = this.idProfissao;
     this.contrato.dataHora = new Date().getTime();
-    this.contrato.dataHoraTermino = this.dataFinal;
+    this.contrato.foto = this.photo;
+    this.contrato.dataHoraFinal = this.dataFinal;
     this.contrato.uidUsuario = this.auth.auth.currentUser.uid;
     this.contrato.situacao = 1;
 
@@ -61,8 +62,8 @@ export class ContrataServicoPage implements OnInit {
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
         allowEdit: true,
-        targetWidth: 300,
-        targetHeight: 300,
+        targetWidth: 600,
+        targetHeight: 600,
         correctOrientation: true
       };
     }else{
@@ -72,8 +73,8 @@ export class ContrataServicoPage implements OnInit {
         encodingType: this.camera.EncodingType.JPEG,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         allowEdit: true,
-        targetWidth: 300,
-        targetHeight: 300,
+        targetWidth: 600,
+        targetHeight: 600,
         correctOrientation: true
       };
     }

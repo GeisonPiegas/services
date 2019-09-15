@@ -38,7 +38,6 @@ export class StorageService {
   }
 
   uploadImagemOrdemServico(idOrdem: string, photo: string){
-    console.log(photo);
     const ref = this.afs.ref('OrdemServico/'+idOrdem);
     ref.putString(photo, 'data_url');
     return ref.getDownloadURL();     

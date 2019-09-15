@@ -28,7 +28,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       { 
-        path: 'details-categoria/:nome', 
+        path: 'details-categoria/:id', 
         loadChildren: '../details-categoria/details-categoria.module#DetailsCategoriaPageModule',
         canActivate: [AuthGuard]
       },
@@ -98,7 +98,7 @@ const routes: Routes = [
         canActivate: [AuthGuard] 
       },
       { 
-        path: 'contrata-servico/:idProfissao',
+        path: 'contrata-servico/:id',
         loadChildren: '../contrata-servico/contrata-servico.module#ContrataServicoPageModule',
         canActivate: [AuthGuard]
       },
@@ -108,7 +108,7 @@ const routes: Routes = [
         canActivate: [AuthGuard] 
       },
       { 
-        path: 'servicos-pedidos/:servico', 
+        path: 'servicos-pedidos/:id', 
         loadChildren: '../servicos-pedidos/servicos-pedidos.module#ServicosPedidosPageModule',
         canActivate: [AuthGuard] 
       },
@@ -123,7 +123,22 @@ const routes: Routes = [
       },
       { 
         path: 'details-endereco', 
-        loadChildren: '../details-endereco/details-endereco.module#DetailsEnderecoPageModule'
+        loadChildren: '../details-endereco/details-endereco.module#DetailsEnderecoPageModule',
+        canActivate: [AuthGuard]
+      },
+      { 
+        path: 'servicos-concluidos/:id', 
+        loadChildren: '../servicos-concluidos/servicos-concluidos.module#ServicosConcluidosPageModule',
+        canActivate: [AuthGuard] 
+      },
+      { 
+        path: 'view-concluido/:id', 
+        loadChildren: '../view-concluido/view-concluido.module#ViewConcluidoPageModule',
+        canActivate: [AuthGuard] 
+      },
+      { 
+        path: 'view-perfil-profissional/:id', 
+        loadChildren: '../view-perfil-profissional/view-perfil-profissional.module#ViewPerfilProfissionalPageModule' 
       },
       {
         path: '',
