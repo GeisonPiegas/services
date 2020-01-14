@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
 import { EnderecoService } from 'src/app/services/Endereco/endereco.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Endereco } from 'src/app/services/Endereco/endereco';
 import { Cidade } from 'src/app/services/Cidades/cidade';
 import { CidadesService } from 'src/app/services/Cidades/cidades.service';

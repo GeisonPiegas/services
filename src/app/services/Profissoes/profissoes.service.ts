@@ -1,6 +1,6 @@
 import { map } from 'rxjs/operators';
 import { Profissoes } from './profissoes';
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 

@@ -1,4 +1,4 @@
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { OrdemServico } from 'src/app/services/OrdemServico/ordem-servico';
@@ -37,7 +37,7 @@ export class ContrataServicoPage implements OnInit {
               private datePicker: DatePicker) { }
 
   ngOnInit() {
-    this.idProfissao = this.router.snapshot.params['idProfissao'];
+    this.idProfissao = this.router.snapshot.params['id'];
   }
 
   async concluiContrato(){
@@ -62,8 +62,8 @@ export class ContrataServicoPage implements OnInit {
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
         allowEdit: true,
-        targetWidth: 600,
-        targetHeight: 600,
+        targetWidth: 500,
+        targetHeight: 500,
         correctOrientation: true
       };
     }else{
@@ -73,20 +73,18 @@ export class ContrataServicoPage implements OnInit {
         encodingType: this.camera.EncodingType.JPEG,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         allowEdit: true,
-        targetWidth: 600,
-        targetHeight: 600,
+        targetWidth: 500,
+        targetHeight: 500,
         correctOrientation: true
       };
     }
 
     try {
       this.camera.getPicture(this.opcaoCamera).then((imageData) => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
         let base64Image = 'data:image/jpeg;base64,' + imageData;
         this.photo = base64Image;
        }, (err) => {
-        // Handle error
+       
        });
 
     } catch (error) {

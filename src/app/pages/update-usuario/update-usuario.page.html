@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary">
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-back-button defaultHref="/menu/home"></ion-back-button>
       </ion-buttons>
       <ion-title>Seus Dados</ion-title>
     </ion-toolbar>
@@ -20,6 +20,7 @@
                   </ion-avatar>
           
                   <ion-item>
+                  
                       <ion-segment>
                           <ion-segment-button (click)="abrirGaleria('camera')">
                             <ion-icon name="camera"></ion-icon>
@@ -28,6 +29,7 @@
                             <ion-icon name="image"></ion-icon>
                           </ion-segment-button>
                         </ion-segment>
+                    
                   </ion-item>
                   <ion-item>
                       <ion-label position="floating">Nome</ion-label>

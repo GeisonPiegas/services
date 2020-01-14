@@ -6,9 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ListaServicosPage } from './lista-servicos.page';
-import { StarRatingComponent } from '../../Component/star-rating/star-rating.component';
-import { BuscaEnderecoComponent } from 'src/app/Component/busca-endereco/busca-endereco.component';
-import { SharedModule } from 'src/app/Component/shared/shared.module';
+import { StarRatingComponent } from '../../components/star-rating/star-rating.component';
+import { BuscaEnderecoComponent } from 'src/app/components/busca-endereco/busca-endereco.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {

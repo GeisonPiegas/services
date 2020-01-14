@@ -1,10 +1,11 @@
-import { ChatComponentProfissional } from './../../Component/chat-profissional/chat-profissional.component';
+import { ChatComponentProfissional } from './../../components/chat-profissional/chat-profissional.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrdemServico } from 'src/app/services/OrdemServico/ordem-servico';
 import { Subscription } from 'rxjs';
 import { OrdemServicoService } from 'src/app/services/OrdemServico/ordem-servico.service';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ModalController } from '@ionic/angular';
+import { AvaliacaoService } from 'src/app/services/Avaliacao/avaliacao.service';
 
 
 @Component({
@@ -14,27 +15,32 @@ import { NavController, ModalController } from '@ionic/angular';
 })
 export class ServicosAceitosPage implements OnInit, OnDestroy {
   aceitos: OrdemServico[];
-  servico: string;
+  idProfissional: string;
   subscriptionOrdens: Subscription;
 
   constructor(private ordemServico: OrdemServicoService,
               private route: ActivatedRoute,
               private NavCtrl: NavController,
-              private modal: ModalController) { }
+              private modal: ModalController,
+              private avaliacao: AvaliacaoService) { }
 
   ngOnInit() {
-    this.servico = this.route.snapshot.params['id'];
-    this.buscaOrdemServico(this.servico);
+    this.idProfissional = this.route.snapshot.params['id'];
+    this.buscaOrdemServico(this.idProfissional);
   }
 
-  buscaOrdemServico(idServico){
-    this.subscriptionOrdens = this.ordemServico.getOrdemAceita(idServico).subscribe( res => {
+  buscaOrdemServico(profissional){
+    this.subscriptionOrdens = this.ordemServico.getOrdemProfissional(profissional,3).subscribe( res => {
       this.aceitos = res;
     })
   }
 
-  servicoConcluido(idOrdem){
+  servicoConcluido(idOrdem, profissao, ordem){
     this.ordemServico.updateSituacaoConcluida(idOrdem);
+    const avaliacao = {
+      valor: 0 
+    }
+    this.avaliacao.addTodo(profissao, ordem, avaliacao);
     this.NavCtrl.pop();
   }
 

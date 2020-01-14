@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Chart } from 'chart.js'
 import { OrdemServicoService } from 'src/app/services/OrdemServico/ordem-servico.service';
@@ -20,34 +20,25 @@ export class ControlePage implements OnInit, OnDestroy{
 
   private uidUsuario: string;
   private subscription: Subscription;
-
   private chartjs2: any;
-
   public diasAtualGastos = new Array<any>();
   public valoresAtualGastos = new Array<any>();
   public diasValorAtualGastos = new Array<OrdemServico>();
-
   public diasValorAtualGanhos = new Array<OrdemServico>();
-
   public valoresAtualGanhos = new Array<any>();
   public diasAtualGanhos = new Array<any>();
-
   public totalGanho: number = 0;
   public totalGasto: number = 0;
   public totalAno: number = 0;
-  
   public viewGanhos: Boolean = true;
   public viewGastos: Boolean = true;
   public viewMeses: Boolean = false;
-
   private mesesChart = new Array<any>();
   private valorChartGanhos = new Array<any>();
   private valorChartGastos = new Array<any>();
-
   public todosOsGanhos = new Array<OrdemServico>();
   public todosOsGastos = new Array<OrdemServico>();
   private dataAtual = new Date();
-
   public todosOsRestos = new Array<OrdemServico>();
 
   public valorMeses = [
@@ -73,18 +64,20 @@ export class ControlePage implements OnInit, OnDestroy{
 
   // Busca e captura os dados referentes aos GASTOS da pessoa.
   buscaGastos(uidUsuario: string){
-    this.subscription = this.ordemServicoService.getOrdemsConcluidas(uidUsuario).subscribe(res => {
+    this.subscription = this.ordemServicoService.getOrdemUsuario(uidUsuario, 4).subscribe(res => {
       this.totalGasto = 0;
+    
       res.forEach( dados => {
         // Pega as ordem do mes em andamento;
         if (this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy') == this.datepipe.transform(this.dataAtual,'MM/yyyy')) {
             this.diasValorAtualGastos.push(dados); 
             this.diasAtualGastos.push(this.datepipe.transform(dados.dataHoraTermino,'dd/MM'));
             this.valoresAtualGastos.push(dados.valor);
+            this.somaMeses(2,this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy'), dados.valor)
             this.totalGasto += dados.valor;
         }else{
           if(this.datepipe.transform(dados.dataHoraFinal,'yyyy') == this.datepipe.transform(this.dataAtual,'yyyy')){
-            this.somaMeses(1,this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy'), dados.valor)
+            this.somaMeses(2,this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy'), dados.valor)
             console.log("Mes "+this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy'));
           }else{
             this.todosOsRestos.push(dados);
@@ -94,42 +87,24 @@ export class ControlePage implements OnInit, OnDestroy{
     });
   };
 
-  somaMeses(ref: number, mes: string, valor: number){
-    if (ref = 1) {
-      this.valorMeses.forEach( res => {
-        if(res.id == mes){
-          res.valorGanho += valor;
-        };
-      });
-      this.totalAno += valor;
-      this.valorChartGanhos.push(valor);
-    } else {
-      this.valorMeses.forEach( res => {
-        if(res.id == mes){
-          res.valorGanho += valor;
-        };
-      });
-      this.totalAno -= valor;
-      this.valorChartGastos.push(valor);
-    };
-  };
-
   // Busca e captura os dados referentes aos GANHOS da pessoa.
   buscaGanhos(uidUsuario: string){
-    this.atuacaoProfissionalService.getServicosProfissional(uidUsuario).subscribe( res => {
+    this.subscription = this.atuacaoProfissionalService.getServicosProfissional(uidUsuario).subscribe( res => {
       this.totalGanho = 0;
       res.forEach(data => {
-        this.ordemServicoService.getOrdemProfissional(data.id,4).subscribe( ordem => {
+        this.subscription = this.ordemServicoService.getOrdemProfissional(data.id, 4).subscribe( ordem => {
           ordem.forEach( dados => {
+           
             if (this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy') == this.datepipe.transform(this.dataAtual,'MM/yyyy')) {
               this.diasValorAtualGanhos.push(dados); 
               this.diasAtualGanhos.push(this.datepipe.transform(dados.dataHoraTermino,'dd/MM'));
               this.valoresAtualGanhos.push(dados.valor);
+              this.somaMeses(1,this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy'), dados.valor)
               this.totalGanho += dados.valor;
             }else{
               if(this.datepipe.transform(dados.dataHoraFinal,'yyyy') == this.datepipe.transform(this.dataAtual,'yyyy')){
                 this.somaMeses(1,this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy'), dados.valor)
-                console.log("Mes "+this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy'));
+                console.log("Mes "+this.datepipe.transform(dados.dataHoraTermino,'MM/yyyy')+"/"+dados.valor);
               }else{
                 this.todosOsRestos.push(dados);
               };
@@ -139,6 +114,25 @@ export class ControlePage implements OnInit, OnDestroy{
       });
     });
   }
+
+  somaMeses(ref: number, mes: string, valor: number){
+    if (ref == 1) {
+      this.valorMeses.forEach( res => {
+        if(res.id == mes){
+          res.valorGanho += valor;
+        };
+      });
+      this.totalAno += valor;
+    } else {
+      this.valorMeses.forEach( res => {
+        if(res.id == mes){
+          res.valorGasto += valor;
+        };
+      });
+      this.totalAno -= valor;
+     
+    };
+  };
 
   // Mostra e esconde o Accordion List, referente se ele é do GASTO ou GANHO,
   // e junto o ID do icone para rotacionar o mesmo interagido. 
@@ -189,7 +183,8 @@ export class ControlePage implements OnInit, OnDestroy{
       document.getElementById('showChart').style.display = 'block';
       this.createChart(this.diasAtualGastos, this.valoresAtualGastos, "rgba(255, 0, 0, 0.2)", "rgba(255, 0, 0, 1)");
     }else{
-      document.getElementById('showChart').style.display = 'block';      
+      document.getElementById('showChart').style.display = 'block'; 
+      this.agrupaDados();     
       this.createChartAno(this.mesesChart, this.valorChartGanhos, this.valorChartGastos, "rgba(255, 0, 0, 0.2)", "rgba(255, 0, 0, 1)");
     };
   };
@@ -205,11 +200,19 @@ export class ControlePage implements OnInit, OnDestroy{
     this.closeChart();
     this.buscaGastos(this.uidUsuario);
     this.buscaGanhos(this.uidUsuario);  
-    
-    this.valorMeses.forEach(res => { 
-      this.mesesChart.push(res.nome);
-    });
   };
+
+  agrupaDados(){
+      this.mesesChart = [];
+      this.valorChartGanhos = [];
+      this.valorChartGastos = [];
+
+      this.valorMeses.forEach(res => { 
+      this.mesesChart.push(res.nome);
+      this.valorChartGanhos.push(res.valorGanho);
+      this.valorChartGastos.push(res.valorGasto);
+    });
+  }
 
   // Cria o grafico com os dados passados.
   createChart(labels: any, data: any, backgroung: string, border: string){

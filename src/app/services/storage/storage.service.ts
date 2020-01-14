@@ -1,12 +1,15 @@
 import { AlertController } from '@ionic/angular';
-import { AngularFireStorage } from 'angularfire2/storage';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
-
+  public dowloadURL: Observable<string>;
+  public foto: string;
+  public url: string;
   constructor(private afs: AngularFireStorage,
     private alertController: AlertController) { 
 
@@ -24,17 +27,17 @@ export class StorageService {
   }
 
   uploadImagemUsuario(uidUsuario: string, photo: string){
-    console.log(photo);
     const ref = this.afs.ref('Usuario/'+uidUsuario);
     ref.putString(photo, 'data_url');
     return ref.getDownloadURL();     
   }
 
-  uploadImagemCategoria(idCategoria: string, photo: string){
+  uploadImagemCategoria(nomeCategoria: string, photo: string){
     console.log(photo);
-    const ref = this.afs.ref('Categoria/'+idCategoria);
+    const ref = this.afs.ref('Categoria/'+nomeCategoria);
     ref.putString(photo, 'data_url');
-    return ref.getDownloadURL();     
+    return ref.getDownloadURL();
+    
   }
 
   uploadImagemOrdemServico(idOrdem: string, photo: string){

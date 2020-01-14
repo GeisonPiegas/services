@@ -2,7 +2,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CategoriaService } from 'src/app/services/Categorias/categorias.service';
 import { Categorias } from 'src/app/services/Categorias/categorias';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { AtuacaoProfissionalService } from 'src/app/services/AtuacaoProfissional/atuacao-profissional.service';
@@ -34,9 +34,9 @@ export class NewProfissaoPage implements OnInit, OnDestroy{
   
     ngOnInit(){
       this.idServico = this.route.snapshot.params['id'];
-        if (this.idServico)  {
-      this.loadTodo();
-    }
+      if (this.idServico)  {
+        this.loadTodo();
+      }
       this.uidUsuario = this.afAuth.auth.currentUser.uid;
 
       this.subscriptionCategoria = this.categorias.getTodos().subscribe(res => {

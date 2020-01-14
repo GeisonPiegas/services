@@ -1,9 +1,9 @@
-import { NgForm } from '@angular/forms';
+import { FormGroup ,FormBuilder, Validators, AbstractControl} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Cidade } from './../../services/Cidades/cidade';
 import { LoadingController, NavController } from '@ionic/angular';
 import { Usuario } from './../../services/Usuarios/usuario';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsuarioService } from 'src/app/services/Usuarios/usuario.service';
 import { Endereco } from 'src/app/services/Endereco/endereco';
 import { CidadesService } from 'src/app/services/Cidades/cidades.service';
@@ -19,18 +19,81 @@ export class CadastroPage implements OnInit, OnDestroy{
   
   public cidades = Array<Cidade>();
   private subscriptionCidades: Subscription;
-  @ViewChild('form') form: NgForm;
+  public formgroup: FormGroup;
+  public email: AbstractControl;
+  public senha: AbstractControl;
+  public senha2: AbstractControl;
+  public nome: AbstractControl;
+  public cpf: AbstractControl;
+  public celular: AbstractControl;
+  public data: AbstractControl;
+  public lougradouro: AbstractControl;
+  public numeroEndereco: AbstractControl;
+  public bairro: AbstractControl;
+  public cidade: AbstractControl;
+
+  
+  public errorMensagens: any;
 
   constructor(private usuarioService: UsuarioService, 
               private loadingController: LoadingController,
               private cidadeService: CidadesService,
               private navCtrl: NavController,
-              private core: Core) {
+              private core: Core,
+              public formBuilder: FormBuilder) {
   }
 
   ngOnInit(){
      //CHAMA A FUNÇÃO QUE BUSCA AS CIDADES DO BANCO
      this.coletaCidade();
+     this.errorMensagens = this.core.identForm;
+
+     this.formgroup = this.formBuilder.group({
+       email:['',Validators.compose([
+         Validators.required,
+         Validators.minLength(6),
+         Validators.maxLength(30),
+         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+       ])],
+       senha:['',Validators.compose([
+         Validators.required,
+         Validators.minLength(6),
+         Validators.maxLength(30),
+       ])],
+       senha2:['',Validators.compose([
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(30),
+       ])],
+       nome:['',Validators.compose([
+        Validators.required,
+       ])],
+       cpf:['',Validators.compose([
+        Validators.required,
+        Validators.minLength(14),
+         Validators.maxLength(14),
+       ])],
+       celular:['',Validators.compose([
+        Validators.required,
+        Validators.minLength(14),
+        Validators.maxLength(14),
+       ])],
+       data:['',Validators.compose([
+        Validators.required,
+       ])],
+       lougradouro:['',Validators.compose([
+        Validators.required,
+       ])],
+       numeroEndereco:['',Validators.compose([
+        Validators.required,
+       ])],
+       bairro:['',Validators.compose([
+        Validators.required,
+       ])],
+       cidade:['',Validators.compose([
+        Validators.required,
+       ])],
+     })
   }
 
   //FUNÇÃO QUE CARREGA TODAS AS CIDADES PREVIAMENTE CADASTRADAS NA APLICAÇÃO

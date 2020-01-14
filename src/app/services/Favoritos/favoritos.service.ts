@@ -1,6 +1,5 @@
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Observable, observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Favoritos } from './favoritos';
 

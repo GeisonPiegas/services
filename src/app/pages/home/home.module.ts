@@ -6,8 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { HomePage } from './home.page';
-import { ChatComponent } from 'src/app/Component/chat/chat.component';
-import { SharedModule } from 'src/app/Component/shared/shared.module';
+import { ChatComponent } from 'src/app/components/chat/chat.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 
 const routes: Routes = [
   {

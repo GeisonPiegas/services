@@ -33,7 +33,7 @@
         <ion-col size="12" size-md="6">
             <ion-item>
                 <ion-label>Cidade</ion-label>
-                <ion-select required name="estado" [(ngModel)]='todoEndereco.cidade' okText="OK" cancelText="CANCELAR">
+                <ion-select required name="cidade" [(ngModel)]='todoEndereco.cidade' okText="OK" cancelText="CANCELAR">
                   <ion-list *ngFor="let cidade of todasCidades">
                     <ion-select-option value="{{ cidade.id }}">{{ cidade.nome }}</ion-select-option>
                   </ion-list>

@@ -12,19 +12,19 @@ import { ActivatedRoute } from '@angular/router';
 
 export class ServicosConcluidosPage implements OnInit, OnDestroy {
   concluidos: OrdemServico[];
-  concluido: string;
+  idProfissional: string;
   subscriptionConcluidos: Subscription;
 
   constructor(private ordemServicoServico: OrdemServicoService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.concluido = this.route.snapshot.params['id'];
-    this.buscaOrdemServico(this.concluido);
+    this.idProfissional = this.route.snapshot.params['id'];
+    this.buscaOrdemServico(this.idProfissional);
   }
 
-  buscaOrdemServico(concluido){
-    this.subscriptionConcluidos = this.ordemServicoServico.getOrdemConcluidas(concluido).subscribe( res => {
+  buscaOrdemServico(profissional){
+    this.subscriptionConcluidos = this.ordemServicoServico.getOrdemProfissional(profissional,4).subscribe( res => {
       this.concluidos = res;
     })
   }

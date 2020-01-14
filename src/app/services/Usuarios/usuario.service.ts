@@ -1,12 +1,12 @@
 import { AuthService } from 'src/app/services/auth.service';
 import { Injectable } from '@angular/core';
 import { Usuario } from './usuario';
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { Endereco } from '../Endereco/endereco';
 import { EnderecoService } from '../Endereco/endereco.service';
 import { Observable } from 'rxjs';
-import { StorageService } from '../storage/storage.service';
+import { StorageService } from '../Storage/storage.service';
 import { Core } from 'src/app/core/core.module';
 
 
@@ -94,19 +94,6 @@ export class UsuarioService {
  
   removeUsuarioTodo(id) {
     return this.todosCollection.doc(id).delete();
-  }
-
-  getUsuarioPorid(categoria: String){
-    return this.db.collection('Usuario', ref => ref.where('idCategoria','==',categoria)).snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          console.log(data);
-          const id = a.payload.doc.id;
-          return { id, ...data}
-        });
-      })
-    )
   }
 
   getUsuarioUmPorUm(id){

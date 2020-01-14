@@ -1,6 +1,6 @@
 import { NgForm } from '@angular/forms';
 import { CidadesService } from './../../services/Cidades/cidades.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { LoadingController, NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';

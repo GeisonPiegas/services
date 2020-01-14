@@ -1,9 +1,10 @@
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AtuacaoProfissionalService } from 'src/app/services/AtuacaoProfissional/atuacao-profissional.service';
 import { AtuacaoProfissional } from 'src/app/services/AtuacaoProfissional/atuacaoProfissional';
 import { Subscription } from 'rxjs';
 import { ToastController } from '@ionic/angular';
+import { OrdemServicoService } from 'src/app/services/OrdemServico/ordem-servico.service';
 
 @Component({
   selector: 'app-servicos-ofertados',
@@ -11,13 +12,15 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./servicos-ofertados.page.scss'],
 })
 export class ServicosOfertadosPage implements OnInit, OnDestroy {
-  uidUsuario: string;
-  profissoes: AtuacaoProfissional[];
-  subscriptionServicos: Subscription;
+  public uidUsuario: string;
+  public profissoes: AtuacaoProfissional[];
+  private subscriptionServicos: Subscription;
+  private cont: number;
 
   constructor(private atuacaoProfissional: AtuacaoProfissionalService,
               private auth: AngularFireAuth,
               private toastController: ToastController,
+              private ordemServico: OrdemServicoService
               ){}
 
   ngOnInit() {
@@ -37,9 +40,23 @@ export class ServicosOfertadosPage implements OnInit, OnDestroy {
   }
 
   isAtivo(id: string){
-    this.atuacaoProfissional.updateAtivo(id,false).then(() => {
-      this.presentToast("Serviço Desativado");
+    this.cont = 0;
+    this.ordemServico.getOrdemProfissional(id, 3).subscribe( res => {
+      console.log(res);
+      res.forEach(() => {
+        this.cont += 1;
+        console.log(this.cont);
+      });
     });
+    setTimeout(() => {
+      if(this.cont > 0){
+        this.presentToast("Há serviços em andamento!");
+      }else{
+        this.atuacaoProfissional.updateAtivo(id,false).then(() => {
+          this.presentToast("Serviço Desativado");
+        });
+      }
+    }, 1500)
   }
 
   async presentToast(msg: string) {

@@ -138,7 +138,18 @@ const routes: Routes = [
       },
       { 
         path: 'view-perfil-profissional/:id', 
-        loadChildren: '../view-perfil-profissional/view-perfil-profissional.module#ViewPerfilProfissionalPageModule' 
+        loadChildren: '../view-perfil-profissional/view-perfil-profissional.module#ViewPerfilProfissionalPageModule',
+        canActivate: [AuthGuard]
+      },
+      { 
+        path: 'servicos-concluidos-cliente', 
+        loadChildren: '../servicos-concluidos-cliente/servicos-concluidos-cliente.module#ServicosConcluidosClientePageModule',
+        canActivate: [AuthGuard]
+      },
+      { 
+        path: 'servicos-desativados', 
+        loadChildren: '../servicos-desativados/servicos-desativados.module#ServicosDesativadosPageModule',
+        canActivate: [AuthGuard] 
       },
       {
         path: '',

@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { PerfilProfissionalPage } from './perfil-profissional.page';
-import { StarRatingComponent } from 'src/app/Component/star-rating/star-rating.component';
 
 const routes: Routes = [
   {

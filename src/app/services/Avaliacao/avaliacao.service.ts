@@ -1,4 +1,4 @@
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Avaliacao } from './avaliacao';
@@ -25,16 +25,16 @@ export class AvaliacaoService {
     )
   }
 
-  getTodo(uidProfissional, uidUsuario) {
-    return this.db.collection('AtuacaoProfissional/'+uidProfissional+'/Avaliacao').doc<Avaliacao>(uidUsuario).valueChanges();
+  getTodo(uidProfissional, ordem) {
+    return this.db.collection('AtuacaoProfissional/'+uidProfissional+'/Avaliacao').doc<Avaliacao>(ordem).valueChanges();
   }
  
   updateTodo(toda: Avaliacao, id: string) {
     return this.todosCollection.doc(id).update(toda);
   }
  
-  addTodo(id, toda: Avaliacao) {
-    return this.db.collection('AtuacaoProfissional/'+id+'/Avaliacao').add(toda);
+  addTodo(atuacao, uidUsuario, toda: Avaliacao) {
+    return this.db.collection('AtuacaoProfissional/'+atuacao+'/Avaliacao').doc(uidUsuario).set(toda);
   }
  
   removeTodo(id) {

@@ -1,0 +1,19 @@
+<ion-grid>
+    <ion-row>
+      <ion-col size="4">
+        <ion-button color="danger" (click)="servicosPedidos(idProfissao)">Pedid.:
+          <b>{{ pedidos }}</b>
+        </ion-button>
+      </ion-col>
+      <ion-col size="4">
+        <ion-button color="warning" (click)="servicosAceitos(idProfissao)">Aceit.:
+          <b>{{ aceitos }}</b>
+        </ion-button>
+      </ion-col>
+      <ion-col size="4">
+          <ion-button color="success" (click)="servicosConcluidos(idProfissao)">Con.:
+            <b>{{ concluidos }}</b>
+          </ion-button>
+        </ion-col>
+    </ion-row>
+  </ion-grid>

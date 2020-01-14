@@ -6,7 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ServicosOfertadosPage } from './servicos-ofertados.page';
-import { PainelServicosComponent } from 'src/app/Component/painel-servicos/painel-servicos.component';
+import { PainelServicosComponent } from 'src/app/components/painel-servicos/painel-servicos.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -20,8 +21,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ServicosOfertadosPage, PainelServicosComponent]
+  declarations: [ServicosOfertadosPage]
 })
 export class ServicosOfertadosPageModule {}

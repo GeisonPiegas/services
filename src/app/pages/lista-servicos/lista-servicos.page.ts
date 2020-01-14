@@ -1,5 +1,5 @@
 import { AtuacaoProfissional } from 'src/app/services/AtuacaoProfissional/atuacaoProfissional';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { LoadingController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';

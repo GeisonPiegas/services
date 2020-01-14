@@ -1,4 +1,4 @@
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { FavoritosService } from 'src/app/services/Favoritos/favoritos.service';
 import { ActivatedRoute } from '@angular/router';
 import { AtuacaoProfissional } from 'src/app/services/AtuacaoProfissional/atuacaoProfissional';
@@ -21,8 +21,6 @@ export class PerfilProfissionalPage implements OnInit, OnDestroy{
   public idProfissao: String;
   private idUsuario: String;
   private idFavorito: String;
-  private nome: String;
-  private foto: string;
   public isFavorito: Boolean = false;
   private user: String;
   private listsubscription: Subscription;
@@ -60,8 +58,6 @@ export class PerfilProfissionalPage implements OnInit, OnDestroy{
         //Busca os dados referentes ao profissional a ser listado.
         this.usuarioService.getUsuario(this.user).subscribe( res => {
           this.todoUsuario = res;
-          this.nome = res.nome;
-          this.foto = res.foto;
         });
         //Busca o endereco referente ao profissional a ser listado
         this.enderecoService.getTodo(this.user).subscribe( res => {
@@ -78,7 +74,6 @@ export class PerfilProfissionalPage implements OnInit, OnDestroy{
       this.listsubscription = this.favoritos.procuraTodo(this.idUsuario,uid).subscribe( res => {
         res.forEach( res => {
             this.idFavorito = res.id;
-            console.log(this.idFavorito);
             if(!this.idFavorito){
               this.isFavorito = false;
             }else{
@@ -110,9 +105,7 @@ addfavorito(){
       const todoFavorito = {
         uidUsuario: this.idUsuario,
         uidProfissional: this.user,
-        date: new Date(),
-        nome: this.nome,
-        foto: this.foto
+        date: new Date().getTime()
       }
       this.favoritos.addTodo(todoFavorito)
       this.presentToast("Favoritado com Sucesso")

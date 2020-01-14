@@ -23,7 +23,7 @@
                     <h4>{{ ordem.valor | currency:'BRL':true:'1.2-2' }}</h4>
                   </ion-item>
                   <ion-item>
-                      <ion-button (click)="servicoConcluido(ordem.id)">Concluido/Pago</ion-button>
+                      <ion-button (click)="servicoConcluido(ordem.id, ordem.idProfissao, ordem.id)">Concluido/Pago</ion-button>
                       <ion-icon slot="end" name="chatbubbles" (click)="abrirChat(ordem.id, ordem.uidUsuario)"></ion-icon>
                   </ion-item>
                 </ion-card>

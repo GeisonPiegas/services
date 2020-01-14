@@ -14,6 +14,7 @@
               <ion-col size="12" size-md="6" *ngFor="let pedido of concluidos">
                 <ion-card [routerLink]="['/menu/view-concluido', pedido.id]">
                     <app-busca-perfil [uidUsuario]="pedido.uidUsuario"></app-busca-perfil>
+                    <p class="ion-text-center">Data do Termino: {{ pedido.dataHoraTermino | date: 'dd/MM/yyyy' }}</p>
                 </ion-card>
               </ion-col>
             </ion-row>

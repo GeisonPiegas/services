@@ -9,15 +9,28 @@ export class Core {
   public identForm = {
     'email': [
       { type: 'requerid', mensagem: 'Email é requirido!' },
-      { type: 'minlength', mensagem: 'Minimo 6 caracter!'},
       { type: 'maxLength', mensagem: 'Maximo 30 caracter!'},
       { type: 'pattern', mensagem: 'Endereco de email invalido!'}
     ],
     'senha': [
-      { type: 'requerid', mensagem: 'Senha é requirido!' },
       { type: 'minlength', mensagem: 'Minimo 6 caracter!'},
       { type: 'maxLength', mensagem: 'Maximo 30 caracter!'},
       { type: 'pattern', mensagem: 'Senha invalido!'}
+    ],
+    'senha2': [
+      { type: 'minlength', mensagem: 'Minimo 6 caracter!'},
+      { type: 'maxLength', mensagem: 'Maximo 30 caracter!'},
+      { type: 'pattern', mensagem: 'Senha invalido!'}
+    ],
+    'cpf': [
+      { type: 'minlength', mensagem: 'Minimo 11 caracter!'},
+      { type: 'maxLength', mensagem: 'Maximo 11 caracter!'},
+      { type: 'pattern', mensagem: 'CPF invalido!'}
+    ],
+    'celular': [
+      { type: 'minlength', mensagem: 'Minimo 11 caracter!'},
+      { type: 'maxLength', mensagem: 'Maximo 11 caracter!'},
+      { type: 'pattern', mensagem: 'Celular invalido!'}
     ]
   }
 
@@ -65,7 +78,7 @@ export class Core {
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
-      buttons: ['Cancel', 'Open Modal', 'Delete']
+      buttons: ['Cancelar', 'Abrir', 'Deletar']
     });
 
     await alert.present();
@@ -81,12 +94,12 @@ export class Core {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            
           }
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay');
+            
           }
         }
       ]

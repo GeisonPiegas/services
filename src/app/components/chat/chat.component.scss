@@ -1,0 +1,38 @@
+.mensagem{
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+    white-space: pre-wrap;
+}
+
+.outra-mensagem{
+    background: var(--ion-color-tertiary);
+    color: #fff;
+}
+
+.minha-mensagem{
+    background: var(--ion-color-secondary);
+    color: #fff;
+}
+
+.time{
+    color: #dfdfdf;
+    float: right;
+    font-size: small;
+}
+
+.mensagem-input{
+    width: 100%;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 10px;
+    background: #fff;
+    color: #000000;
+    resize: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.mensagem-btn{
+    --padding-start: 0.5em;
+    --padding-end: 0.5em;
+}

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu/servicos-ofertados"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Serviços Desativados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-toolbar color="primary">
+        <ion-searchbar placeholder="Procurar"></ion-searchbar>
+    </ion-toolbar>
+    <ion-list>
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="12" size-md="6" *ngFor="let profissao of profissoes">
+              <ion-card>
+                <h6 class="alertaObs" *ngIf="profissao.obs != null"><b>{{ profissao.obs }}</b></h6>
+                <ion-card>
+                    <ion-item lines="none">
+                      <h4>{{ profissao.profissao }}</h4>
+                      <ion-icon slot="end" *ngIf='profissao.isVerificado == false' name="create" [routerLink]="['/menu/new-profissao', profissao.id]"></ion-icon>
+                      <p slot="end" *ngIf='profissao.isVerificado == true'><ion-icon color="success" name="checkmark-circle"></ion-icon></p>
+                      <p slot="end" *ngIf='profissao.isVerificado == false'><ion-icon color="danger" name="alert"></ion-icon></p>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Ativo:</ion-label>
+                      <ion-toggle [(ngModel)]="profissao.isAtivo" (click)='isAtivo(profissao.id)' slot="end"></ion-toggle>
+                    </ion-item>
+                </ion-card>
+                <app-painel-servicos [idProfissao]='profissao.id'></app-painel-servicos>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+  </ion-content>

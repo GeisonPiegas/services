@@ -6,57 +6,95 @@
     <ion-title>Cadastro</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-card>
     <ion-card-title>
-      <h4 class="ion-text-center">Olá!</h4>
+      <h4 class="ion-text-center">Cadastro</h4>
     </ion-card-title>
     <ion-card-content>
       <ion-grid>
-        <form #form="ngForm">
+        <form [formGroup]="formgroup">
         <ion-row>
           <ion-col size="12" size-md="6">
             <ion-item>
-              <ion-input name="email" type="text" placeholder="E-mail" [(ngModel)]='todoUser.email' required>
+              <ion-input formControlName="email" type="text" placeholder="E-mail" [(ngModel)]='todoUser.email'>
+              </ion-input> 
+            </ion-item>
+              <div class="erro-mensagens">
+                <ng-container *ngFor="let error of errorMensagens.email">
+                  <div *ngIf="formgroup.get('email').hasError(error.type) && (formgroup.get('email').dirty || formgroup.get('email').touched)" >
+                    {{ error.mensagem }}
+                  </div>
+                </ng-container>
+              </div>
+            <ion-item>
+              <ion-input formControlName="senha" type="password" placeholder="Senha" [(ngModel)]='todoUser.senha'>
               </ion-input>
             </ion-item>
+              <div class="erro-mensagens">
+                <ng-container *ngFor="let error of errorMensagens.senha">
+                  <div *ngIf="formgroup.get('senha').hasError(error.type) && (formgroup.get('senha').dirty || formgroup.get('senha').touched)" >
+                    {{ error.mensagem }}
+                  </div>
+                </ng-container>
+              </div> 
             <ion-item>
-              <ion-input name="senha" type="password" placeholder="Senha" [(ngModel)]='todoUser.senha' required>
+              <ion-input formControlName="senha2" type="password" placeholder="Confirmar Senha" required>
               </ion-input>
             </ion-item>
+            <div class="erro-mensagens">
+                <ng-container *ngFor="let error of errorMensagens.senha2">
+                  <div *ngIf="formgroup.get('senha2').hasError(error.type) && (formgroup.get('senha2').dirty || formgroup.get('senha2').touched)" >
+                    {{ error.mensagem }}
+                  </div>
+                </ng-container>
+              </div>
             <ion-item>
-              <ion-input name="nome" type="text" placeholder="Nome" [(ngModel)]='todoUser.nome' required></ion-input>
+              <ion-input formControlName="nome" type="text" placeholder="Nome" [(ngModel)]='todoUser.nome' required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="cpf" type="text" placeholder="CPF" [(ngModel)]='todoUser.CPF' [brmasker]="{mask:'000.000.000-00', type:'num', len:14 }" required></ion-input>
+              <ion-input formControlName="cpf" type="text" placeholder="CPF" [(ngModel)]='todoUser.CPF' [brmasker]="{mask:'000.000.000-00', type:'num', len:14 }" required></ion-input>
             </ion-item>
+            <div class="erro-mensagens">
+                <ng-container *ngFor="let error of errorMensagens.cpf">
+                  <div *ngIf="formgroup.get('cpf').hasError(error.type) && (formgroup.get('cpf').dirty || formgroup.get('cpf').touched)" >
+                    {{ error.mensagem }}
+                  </div>
+                </ng-container>
+              </div>
           </ion-col>
           <ion-col size="12" size-md="6">
             <ion-item>
-              <ion-input name="celular" type="text" placeholder="Celular" [(ngModel)]='todoUser.celular' [brmasker]="{mask:'(00)00000-0000', type:'num', len:14 }" required>
+              <ion-input formControlName="celular" type="text" placeholder="Celular" [(ngModel)]='todoUser.celular' [brmasker]="{mask:'(00)00000-0000', type:'num', len:14 }" required>
               </ion-input>
             </ion-item>
+              <div class="erro-mensagens">
+                <ng-container *ngFor="let error of errorMensagens.celular">
+                  <div *ngIf="formgroup.get('celular').hasError(error.type) && (formgroup.get('celular').dirty || formgroup.get('celular').touched)" >
+                    {{ error.mensagem }}
+                  </div>
+                </ng-container>
+              </div>
             <ion-item>
               <ion-label>Data de Nascimento:</ion-label>
-              <ion-input name="data" type="date" [(ngModel)]='todoUser.dataNasc'required ></ion-input>
+              <ion-input formControlName="data" type="date" [(ngModel)]='todoUser.dataNasc'required ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="lougradouro" type="text" placeholder="Logradouro" [(ngModel)]='todoEnd.lougradouro' required></ion-input>
+              <ion-input formControlName="lougradouro" type="text" placeholder="Logradouro" [(ngModel)]='todoEnd.lougradouro' required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="numeroEndereco" type="number" placeholder="Numero" [(ngModel)]='todoEnd.numero' [brmasker]="{mask:'000000', len:6 }" required>
+              <ion-input formControlName="numeroEndereco" type="number" placeholder="Numero" [(ngModel)]='todoEnd.numero' [brmasker]="{mask:'000000', len:6 }" required>
               </ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="bairro" type="text" placeholder="Bairro" [(ngModel)]='todoEnd.bairro' required>
+              <ion-input formControlName="bairro" type="text" placeholder="Bairro" [(ngModel)]='todoEnd.bairro' required>
               </ion-input>
             </ion-item>
 
             <!-- LISTA AS CIDADES -->
             <ion-item>
               <ion-label>Cidade</ion-label>
-              <ion-select name="cidade" [(ngModel)]='todoEnd.cidade' okText="OK" cancelText="CANCELAR" required>
+              <ion-select formControlName="cidade" [(ngModel)]='todoEnd.cidade' okText="OK" cancelText="CANCELAR" required>
                 <ion-list *ngFor="let c of cidades">
                   <ion-select-option value="{{c.nome}}">{{c.nome}}</ion-select-option>
                 </ion-list>
@@ -64,7 +102,7 @@
             </ion-item>
           </ion-col>
           <ion-col size="12">
-            <ion-button expand="full" (click)="concluiCadastro()" [disabled]="!form.form.valid">cadastrar</ion-button>
+            <ion-button expand="full" (click)="concluiCadastro()" [disabled]="!formgroup.valid">cadastrar-se</ion-button>
           </ion-col>
         </ion-row>
         </form>

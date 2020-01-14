@@ -2,10 +2,11 @@ import { NgForm } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Categorias } from 'src/app/services/Categorias/categorias';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, Platform } from '@ionic/angular';
 import { CategoriaService } from 'src/app/services/Categorias/categorias.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Core } from 'src/app/core/core.module';
+import { File } from '@ionic-native/file/ngx';
 
 @Component({
   selector: 'app-details-categoria',
@@ -20,6 +21,7 @@ export class DetailsCategoriaPage implements OnInit {
     descricao: '',
     foto: ''
   };
+
   public photo: string = '';
   private idCategoria: string;
   
@@ -28,6 +30,8 @@ export class DetailsCategoriaPage implements OnInit {
               private loadingController: LoadingController, 
               private categoriaService: CategoriaService,
               private navCtrl: NavController,
+              private platform: Platform,
+              private file: File,
               private camera: Camera,
               private core: Core){ }
 
@@ -68,6 +72,7 @@ export class DetailsCategoriaPage implements OnInit {
     } else {
       if (this.photo != '') {
         this.todas.foto = this.photo;
+        // Mudar aqui!
       }
       this.categoriaService.addTodo(this.todas).then(() => {
         loading.dismiss();
@@ -77,31 +82,29 @@ export class DetailsCategoriaPage implements OnInit {
   }
 
   async abrirGaleria(){
-    const opcao: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      //mediaType: this.camera.MediaType.PICTURE,
-      allowEdit: true,
-      targetWidth: 300,
-      targetHeight: 300,
-      correctOrientation: true
-    };
+      const opcaoCamera = {
+        quality: 100,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        targetWidth: 300,
+        targetHeight: 300,
+        correctOrientation: true
+      };
 
     try {
-      this.camera.getPicture(opcao).then((imageData) => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
+      this.camera.getPicture(opcaoCamera).then((imageData) => {
         let base64Image = 'data:image/jpeg;base64,' + imageData;
         this.photo = base64Image;
        }, (err) => {
-        // Handle error
+       
        });
 
     } catch (error) {
-      this.core.presentAlert('Ops, algo aconteceu!',error);
+      this.core.presentAlert('Ops, algo acontece!',error);
     }
   }
 
-}
+
+}              

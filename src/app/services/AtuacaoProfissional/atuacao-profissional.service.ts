@@ -1,5 +1,5 @@
 import { AtuacaoProfissional } from './atuacaoProfissional';
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
@@ -66,6 +66,18 @@ export class AtuacaoProfissionalService {
     )
   }
 
+  getDeletCategoria(categoria: String){
+    return this.db.collection<AtuacaoProfissional>('AtuacaoProfissional', ref => ref.where('idCategoria','==',categoria)).snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data}
+        });
+      })
+    )
+  }
+
   getServicosProfissional(idProfissional: String){
     return this.db.collection<AtuacaoProfissional>('AtuacaoProfissional', ref => ref.where('uidUsuario','==',idProfissional).where('isAtivo','==', true)).snapshotChanges().pipe(
       map(actions => {
@@ -89,4 +101,17 @@ export class AtuacaoProfissionalService {
       })
     )
   }
+
+  getServicosDesativados(idProfissional: string){
+    return this.db.collection<AtuacaoProfissional>('AtuacaoProfissional', ref => ref.where('uidUsuario','==',idProfissional).where('isAtivo','==', false)).snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data}
+        });
+      })
+    )
+  }
+
 }

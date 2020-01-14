@@ -44,8 +44,11 @@
               <h3>{{ ordem.valor | currency: 'BRL' }}</h3>
             </ion-item>
           </ion-col>
-    </ion-row>
-    </ion-card>
-  </ion-grid>
+        </ion-row>
+      </ion-card>
+      <ion-card *ngIf="avaliacao" class="avaliacao ion-text-center">
+        <app-star-rating-vote [idOrdem]="idOrdem" [idAtuacao]="ordem.idProfissao"></app-star-rating-vote>  
+      </ion-card>
+    </ion-grid>
 
 </ion-content>

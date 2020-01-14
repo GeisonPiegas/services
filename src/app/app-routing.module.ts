@@ -14,10 +14,6 @@ const routes: Routes = [
     canActivate: [LoginGuard] 
   },
   { 
-    path: 'signup', 
-    loadChildren: './pages/signup/signup.module#SignupPageModule' 
-  },
-  { 
     path: 'resetpassword', 
     loadChildren: './pages/resetpassword/resetpassword.module#ResetpasswordPageModule' 
   },
@@ -32,7 +28,7 @@ const routes: Routes = [
   { 
     path: 'menu', 
     loadChildren: './pages/menu/menu.module#MenuPageModule'
-  },
+  }
 ];
 
 @NgModule({

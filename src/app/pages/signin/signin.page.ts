@@ -18,7 +18,7 @@ export class SigninPage implements OnInit{
   user: User = new User();
   public formgroup: FormGroup;
   public email: AbstractControl;
-  public senha: AbstractControl
+  public senha: AbstractControl;
   public errorMensagens: any;
 
   constructor(public router: Router,

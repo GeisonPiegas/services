@@ -1,4 +1,4 @@
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Favoritos } from 'src/app/services/Favoritos/favoritos';
 import { Subscription } from 'rxjs';

@@ -19,7 +19,7 @@
                   <ion-card-header>
                     <app-busca-perfil [uidUsuario]='servico.uidUsuario'></app-busca-perfil>
                     <h4 class="texto">{{ servico.profissao }}</h4>
-                    <app-star-rating [readOnly]="true" [uidUsuario]="uidUsuario" [idAtuacao]="servico.id"></app-star-rating>
+                    <app-star-rating [idAtuacao]="servico.id"></app-star-rating>
                   </ion-card-header>
                   <ion-item>
                     <app-busca-endereco [uidUsuario]='servico.uidUsuario'></app-busca-endereco>

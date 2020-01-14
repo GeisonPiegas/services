@@ -11,20 +11,20 @@ import { OrdemServico } from 'src/app/services/OrdemServico/ordem-servico';
 })
 export class ServicosPedidosPage implements OnInit, OnDestroy {
   pedidos: OrdemServico[];
-  pedido: string;
+  idProfissional: string;
   subscriptionPedidos: Subscription;
 
   constructor(private ordemServico: OrdemServicoService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.pedido = this.route.snapshot.params['id'];
+    this.idProfissional = this.route.snapshot.params['id'];
 
-    this.buscaOrdemServico(this.pedido);
+    this.buscaOrdemServico(this.idProfissional);
   }
 
-  buscaOrdemServico(uidpedido){
-    this.subscriptionPedidos = this.ordemServico.getOrdemEnviada(uidpedido).subscribe( res => {
+  buscaOrdemServico(profissional){
+    this.subscriptionPedidos = this.ordemServico.getOrdemProfissional(profissional, 1).subscribe( res => {
       this.pedidos = res;
     })
   }

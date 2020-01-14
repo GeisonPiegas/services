@@ -5,6 +5,7 @@ import { LoadingController, ActionSheetController } from '@ionic/angular';
 import { Categorias } from 'src/app/services/Categorias/categorias';
 import { Router } from '@angular/router';
 import { Core } from 'src/app/core/core.module';
+import { AtuacaoProfissionalService } from 'src/app/services/AtuacaoProfissional/atuacao-profissional.service';
 
 @Component({
   selector: 'app-categorias',
@@ -15,12 +16,14 @@ export class CategoriasPage implements OnInit, OnDestroy{
   todas: Categorias[];
   filtroCategoria: Categorias[];
   categoriaSubscription: Subscription;
+  private cont: number;
 
   constructor(private categoriaService: CategoriaService,
               private loadingController: LoadingController,
               private actionSheetController: ActionSheetController,
               private router: Router,
-              private core: Core){ }
+              private core: Core,
+              private atuacaoProfissional: AtuacaoProfissionalService){ }
  
   ngOnInit() {
     this.loadTodo();
@@ -50,7 +53,19 @@ export class CategoriasPage implements OnInit, OnDestroy{
         role: 'destructive',
         icon: 'trash',
         handler: () => {
-          this.remove(id)
+          this.cont = 0;
+          this.atuacaoProfissional.getDeletCategoria(nome).subscribe( res => {
+            res.forEach( x => {
+              this.cont += 1;
+            }) 
+          })
+          setTimeout(() => {
+            if(this.cont > 0){
+              this.core.presentAlert("Ops","Não é possivel apagar pois há serviços cadastrados nesta categoria.");
+            }else{
+              this.remove(id);
+            }
+          }, 1500); 
         }
       }, {
         text: 'Editar',

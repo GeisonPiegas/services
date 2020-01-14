@@ -1,6 +1,6 @@
 import { AtuacaoProfissionalService } from 'src/app/services/AtuacaoProfissional/atuacao-profissional.service';
 import { Subscription } from 'rxjs';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrdemServicoService } from 'src/app/services/OrdemServico/ordem-servico.service';
 import { OrdemServico } from 'src/app/services/OrdemServico/ordem-servico';
@@ -34,12 +34,12 @@ export class HomePage implements OnInit, OnDestroy{
     this.uidUsuario = this.auth.auth.currentUser.uid;
 
     // BUSCA AS ORDEM RESPONDIDADAS PELOS PROFISSIONAIS COM O VALOR, E PERMITE ACEITAR OU CANCELAR A ORDEM.
-    this.subscriptionOrdens = this.ordemServicoService.getOrdemRespondida(this.uidUsuario).subscribe( res => {
+    this.subscriptionOrdens = this.ordemServicoService.getOrdemUsuario(this.uidUsuario, 2).subscribe( res => {
       this.ordem = res;
     });
 
     // BUSCA AS ORDEM ACEITAS E QUE ESTEJAM EM ANDAMENTO, E LIBERA O CHAT PARA OS INTERSSADOS.
-    this.subscriptionOrdens = this.ordemServicoService.getOrdemAceitaCliente(this.uidUsuario).subscribe( res => {
+    this.subscriptionOrdens = this.ordemServicoService.getOrdemUsuario(this.uidUsuario, 3).subscribe( res => {
       this.ordemAceitas = res;
     });
 

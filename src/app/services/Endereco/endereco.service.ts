@@ -1,7 +1,7 @@
 import { Endereco } from './endereco';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 
 
